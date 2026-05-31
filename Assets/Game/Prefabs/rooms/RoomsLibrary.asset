@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d3c993e80864249ba274923297b865, type: 3}
+  m_Name: RoomsLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::PrefabCollection
+  prefabs:
+  - {fileID: 2548171390330658213, guid: a89535c1012daf149a55307025b0a88f, type: 3}
+  - {fileID: 1625174100844164137, guid: 0243c073300b3ba4ca108bfd528b979b, type: 3}
+  - {fileID: 2415739223221684592, guid: 9dc311d8fe30845458563bf5be1538be, type: 3}
+  - {fileID: 7814083659346197524, guid: 825b826f132511b46832866bf6a3f81e, type: 3}
+  - {fileID: 8408954729681641953, guid: e449aae8eb86f584bb42fa59218f9995, type: 3}
+  path: 

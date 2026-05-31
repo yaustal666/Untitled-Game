@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: 980b37939aad2b44d99db529d737c59d
+  m_SerializeEntries:
+  - m_GUID: 11353ff530c2ad64586b3fd95052703b
+    m_Address: Assets/Game/NewQuestData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Quest
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aeca28edbd1055b48b5bceb65e3d45c0
+    m_Address: Assets/Game/Items
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f836404c57f7f144b854a61c2b5096e7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 49a528fe754597c45802567a5bf2986e, type: 2}
+    - {fileID: 11400000, guid: 2d83f7312b027d34e8f6a148dbb68b19, type: 2}

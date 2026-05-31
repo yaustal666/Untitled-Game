@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Wall
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - Interaction
+  - PlayerHurtbox
+  - EnemyHurtbox
+  - PlayerHitbox
+  - EnemyHitbox
+  - 
+  - 
+  - 
+  - 
+  - 
+  - camera
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background 5
+    uniqueID: 699249643
+    locked: 0
+  - name: Background 4
+    uniqueID: 1430958619
+    locked: 0
+  - name: Background 3
+    uniqueID: 3080508193
+    locked: 0
+  - name: Background 2
+    uniqueID: 3465777289
+    locked: 0
+  - name: Background 1
+    uniqueID: 3171184419
+    locked: 0
+  - name: Background
+    uniqueID: 872480153
+    locked: 0
+  - name: Player
+    uniqueID: 2831942551
+    locked: 0
+  m_RenderingLayers:
+  - Default
+  m_MigratedRenderPipelines: []
