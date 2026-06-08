@@ -39,8 +39,11 @@ public class Game
     public async UniTask InitializeGame()
     {
         var sessionInstaller = new SessionInstaller();
-        _sessionContainer = await sessionInstaller.InstallGameSession(_rootContainer);
 
+        _sessionContainer = await sessionInstaller.InstallGameSession(_rootContainer);
+        var loc = _sessionContainer.Resolve<LocalizationSystem>();
+        await loc.ChangeLanguage(_rootContainer.Resolve<GameSettings>().Language);
+        await _sessionContainer.Resolve<DialogueSystem>().Initialize();
         var gameSettings = _sessionContainer.Resolve<GameSettings>();
         var uiRootObject = Object.Instantiate(gameSettings.UIRootPrefab);
         GameObjectInjector.InjectRecursive(uiRootObject, _sessionContainer);

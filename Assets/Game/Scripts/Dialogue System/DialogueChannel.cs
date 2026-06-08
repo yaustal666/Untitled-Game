@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class DialogueChannel
 {
@@ -7,7 +6,6 @@ public class DialogueChannel
 
     public void StartDialog(string knot)
     {
-        Debug.Log("Event Send Request");
         DialogRequest?.Invoke(knot);
     }
 }

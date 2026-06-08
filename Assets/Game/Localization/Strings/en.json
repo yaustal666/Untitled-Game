@@ -1,0 +1,21 @@
+{
+    "items": {
+        "item_stick": {
+            "name": "Stick",
+            "description": "Nothing but an ordinary stick"
+        },
+        "item_apple": {
+            "name": "Apple",
+            "description": "Yummy!"
+        }
+    },
+    "quests": {
+        "quest_basic_quest": {
+            "title": "Basic Quest",
+            "description": "Collect 2 sticks",
+            "objectives" : [
+                "Collect 2 sticks"
+            ]
+        }
+    }
+}

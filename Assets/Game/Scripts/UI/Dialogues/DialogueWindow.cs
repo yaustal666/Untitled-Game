@@ -8,14 +8,13 @@ using UnityEngine.UI;
 
 public class DialogueWindow : MonoBehaviour
 {
+    [Inject] DialogueSystem _dialogueSystem;
+
     public event Action DialogueStarted;
     public event Action DialogueEnded;
 
-    [Inject] DialogueSystem _dialogueSystem;
-
     [SerializeField] private GameObject windowContainer;
     [SerializeField] private TextMeshProUGUI dialogueText;
-
     [SerializeField] private Transform choicesContainer;
     [SerializeField] private Button choiceButtonPrefab;
 

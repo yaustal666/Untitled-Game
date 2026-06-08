@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f64a762460bfd4f888f2283b046ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC
-  _name: npc_margaret
+  _name: npc_bob
 --- !u!4 &967410231
 Transform:
   m_ObjectHideFlags: 0

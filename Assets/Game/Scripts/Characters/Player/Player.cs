@@ -35,10 +35,10 @@ public class Player : IDisposable
         CurrentMode = PlayerMode.TopDown;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageData damageInfo)
     {
         if (CurrentStatus == PlayerStatus.Dead) return;
-        Health.TakeDamage(damage);
+        Health.TakeDamage(damageInfo.Damage);
         PlayerGotHit?.Invoke();
     }
 

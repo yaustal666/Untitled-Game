@@ -1,19 +1,11 @@
 using Cysharp.Threading.Tasks;
-using Reflex.Attributes;
 using Reflex.Extensions;
 using Reflex.Injectors;
-using Unity.Cinemachine;
 using UnityEngine;
 
-public class TempleEntryPoint : MonoBehaviour
+public sealed class TempleEntryPoint : EntryPoint
 {
-    [Inject] private Player _player;
-    [Inject] private PlayerSpawner _playerSpawner;
-
-    public Transform playerSpawnPoint;
-    [SerializeField] private CinemachineCamera mainCamera;
-
-    private async void Start()
+    protected override async UniTask SetupScene()
     {
         var sceneContainer = gameObject.scene.GetSceneContainer();
 

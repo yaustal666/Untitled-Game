@@ -68,9 +68,9 @@ public class PlayerView : MonoBehaviour, IDamagable
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageData damageInfo)
     {
-        _player.TakeDamage(damage);
+        _player.TakeDamage(damageInfo);
     }
 
     private async UniTask DamageFlash()

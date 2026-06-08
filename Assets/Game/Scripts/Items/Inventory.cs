@@ -18,7 +18,11 @@ public class Inventory : IDisposable, ISavable
 
     private int OnGetItemCountRequested(GetItemCountQuery query)
     {
-        return _mappingItemToAmount[query.ItemId];
+        if(_mappingItemToAmount.TryGetValue(query.ItemId, out int amount)) {
+            return amount;
+        }
+
+        return 0;
     }
 
     public void Dispose()

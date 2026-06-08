@@ -25,6 +25,8 @@ public class UIRoot : MonoBehaviour
         Debug.Log(_game);
         _inputReader.PausePressed += OnPausePressed;
         _inputReader.InventoryPressed += OpenInventory;
+        _inputReader.QuestPressed += OpenQuestWindow;
+        _inputReader.MaskPressed += OpenUpgradeMask;
 
         _pauseMenu.ResumePressed += CloseWindow;
         _inputReader.UnPausePressed += CloseWindow;
@@ -59,6 +61,17 @@ public class UIRoot : MonoBehaviour
             _playerMenu.gameObject.SetActive(true);
             _game.Pause(true);
             _playerMenu.ShowInventory();
+            _windowOpened = true;
+        }
+    }
+
+    public void OpenQuestWindow()
+    {
+        if (!_windowOpened)
+        {
+            _playerMenu.gameObject.SetActive(true);
+            _game.Pause(true);
+            _playerMenu.ShowQuestWindow();
             _windowOpened = true;
         }
     }
@@ -104,6 +117,9 @@ public class UIRoot : MonoBehaviour
 
     private void OnDestroy()
     {
+        _dialodueWindow.DialogueStarted -= OpenDialogue;
+        _dialodueWindow.DialogueEnded -= CloseWindow;
+
         _inputReader.PausePressed -= OnPausePressed;
         _inputReader.InventoryPressed -= OpenInventory;
 

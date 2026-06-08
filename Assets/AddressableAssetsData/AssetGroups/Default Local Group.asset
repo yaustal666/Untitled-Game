@@ -21,6 +21,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - Quest
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 602f5830310672546a3b84e3afd3eab8
+    m_Address: Assets/Game/Localization/Strings/en.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79b60f76aac277f42ad763e0ec19889b
+    m_Address: Assets/Game/Localization/Story/StoryMain.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aeca28edbd1055b48b5bceb65e3d45c0
     m_Address: Assets/Game/Items
     m_ReadOnly: 0

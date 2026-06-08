@@ -1,29 +1,30 @@
 public class QuestObjective
-{
-    private QuestObjectiveData _data;
-    private int _currentAmount;
-
-    public bool IsCompleted => _currentAmount >= _data.RequiredAmount;
-    public QuestObjectiveType Type => _data.ObjectiveType;
-    public string TargetId => _data.TargetId;
+{    
+    public QuestObjectiveType ObjectiveType { get; private set; }
+    public bool IsCompleted => CurrentAmount >= RequiredAmount;
+    public int RequiredAmount { get; private set; }
+    public string TargetId { get; private set; }
+    public int CurrentAmount { get; private set; }
 
     public QuestObjective(QuestObjectiveData data)
     {
-        _data = data;
-        _currentAmount = 0;
+        ObjectiveType = data.ObjectiveType;
+        TargetId = data.TargetId;
+        RequiredAmount = data.RequiredAmount;
+        CurrentAmount = 0;
     }
 
     public bool EvaluateProgress(QuestObjectiveType eventType, string targetId, int amount)
     {
         if (IsCompleted) return false;
-        if (_data.ObjectiveType != eventType || _data.TargetId != targetId) return false;
+        if (ObjectiveType != eventType || TargetId != targetId) return false;
 
-        _currentAmount = System.Math.Min(_currentAmount + amount, _data.RequiredAmount);
+        CurrentAmount = CurrentAmount + amount;
         return true;
     }
 
     public void RestoreProgress(int amount)
     {
-        _currentAmount = amount;
+        CurrentAmount = amount;
     }
 }

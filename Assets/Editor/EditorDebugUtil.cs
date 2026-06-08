@@ -12,7 +12,11 @@ public class EditorDebugUtil : Editor
         {
             if (GUILayout.Button("Kill"))
             {
-                damagable.TakeDamage(10000);
+                DamageData damageInfo = new DamageData
+                {
+                    Damage = 10000f
+                };
+                damagable.TakeDamage(damageInfo);
             }
         }
     }

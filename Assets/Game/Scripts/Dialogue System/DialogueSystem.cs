@@ -1,9 +1,10 @@
+using Cysharp.Threading.Tasks;
 using Ink.Runtime;
 using Reflex.Attributes;
 using System;
 using System.Collections.Generic;
 
-public class DialogueSystem : ISavable
+public class DialogueSystem : ISavable, IDisposable
 {
     [Inject] private QuestSystem _questSystem;
 
@@ -12,40 +13,47 @@ public class DialogueSystem : ISavable
     public event Action<List<Choice>> OnChoicesReceived;
     public event Action ExitDialogue;
 
-    private DialogueChannel _channel;
-
     private Story _story;
+    private LocalizationSystem _loc;
+    private DialogueChannel _channel;
     private bool _isDialogueActive = false;
 
-    public DialogueSystem(GameSettings settings, DialogueChannel channel, ISaveRegistry saveRegistry)
+    public DialogueSystem(DialogueChannel channel, ISaveRegistry saveRegistry, LocalizationSystem loc)
     {
+        _loc = loc;
         _channel = channel;
-        _story = new Story(settings.Dialogs.text);
         _channel.DialogRequest += StartDialogue;
-
-        _story.BindExternalFunction("startQuest", (string questId) =>
-        {
-            _questSystem.ActivateQuest(questId);
-        });
-
-        _story.BindExternalFunction("getQuestStatus", (string questId) =>
-        {
-            return _questSystem.GetQuestStatus(questId);
-        });
-
-        _story.BindExternalFunction("completeQuest", (string questId) =>
-        {
-            _questSystem.CompleteQuest(questId);
-        });
-
         saveRegistry.Register(this);
+    }
+
+    public void Dispose()
+    {
+        UnbindExternalFunctions();
+        _channel.DialogRequest -= StartDialogue;
+    }
+
+    public async UniTask Initialize()
+    {
+        var storyText = await _loc.GetStoryAssetAsync();
+        _story = new Story(storyText.text);
+        BindExternalFunctions();
+    }
+
+    public async UniTask ReloadStory()
+    {
+        UnbindExternalFunctions();
+        var save = _story.state.ToJson();
+        var storyText = await _loc.GetStoryAssetAsync();
+        _story = new Story(storyText.text);
+        _story.state.LoadJson(save);
+        BindExternalFunctions();
     }
 
     public void StartDialogue(string knotName)
     {
         if (_isDialogueActive) return;
-
         _isDialogueActive = true;
+
         EnterDialogue?.Invoke();
         _story.ChoosePathString(knotName);
         AdvanceDialogue();
@@ -69,6 +77,31 @@ public class DialogueSystem : ISavable
         }
     }
 
+    private void EndDialogue()
+    {
+        _isDialogueActive = false;
+        ExitDialogue?.Invoke();
+    }
+
+    private void BindExternalFunctions()
+    {
+        _story.BindExternalFunction("startQuest", (string questId) =>
+        {
+            _questSystem.ActivateQuest(questId);
+        });
+
+        _story.BindExternalFunction("getQuestStatus", (string questId) =>
+        {
+            return _questSystem.GetQuestStatus(questId);
+        });
+    }
+
+    private void UnbindExternalFunctions()
+    {
+        _story?.UnbindExternalFunction("startQuest");
+        _story?.UnbindExternalFunction("getQuestStatus");
+    }
+
     public void OnPlayerPressedNext()
     {
         if (_story.currentChoices.Count > 0) return;
@@ -79,12 +112,6 @@ public class DialogueSystem : ISavable
     {
         _story.ChooseChoiceIndex(choiceIndex);
         AdvanceDialogue();
-    }
-
-    private void EndDialogue()
-    {
-        _isDialogueActive = false;
-        ExitDialogue?.Invoke();
     }
 
     public void Save(GameSaveData saveData)

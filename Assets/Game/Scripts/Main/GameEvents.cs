@@ -85,6 +85,7 @@ public struct ItemGainedMessage : IGameMessage
 
 public struct EnemyDeathMessage : IGameMessage
 {
+    public string EnemyId;
     public LootTable LootTable;
 }
 

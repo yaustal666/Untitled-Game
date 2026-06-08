@@ -91,7 +91,10 @@ public class Projectile : MonoBehaviour
         {
             if (collision.TryGetComponent<Hurtbox>(out var hurtbox))
             {
-                hurtbox.Owner.TakeDamage(_data.baseDamage);
+                DamageData damageInfo = new DamageData { 
+                    Damage = _data.baseDamage
+                };
+                hurtbox.Owner.TakeDamage(damageInfo);
             }
             _view.PlayHitEffect(_data, transform.position);
             ReturnToPool();

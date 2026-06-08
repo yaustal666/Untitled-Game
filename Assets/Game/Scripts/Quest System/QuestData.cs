@@ -21,7 +21,7 @@ public struct QuestObjectiveData
 public enum QuestRewardType
 {
     Item,
-    Stat
+    Currency
 }
 
 [Serializable]
@@ -29,21 +29,17 @@ public struct QuestRewardData
 {
     public QuestRewardType RewardType;
     public string ItemId;
-    public string StatId;
     public int ItemAmount;
-    public float StatAmount;
+    public int CurrencyAmount;
 }
 
 [CreateAssetMenu(fileName = "QuestData", menuName = "ScriptableObjects/Quest Data")]
 public class QuestData : ScriptableObject
 {
     [field: SerializeField] public string Id { get; private set; }
-    [field: SerializeField] public string Title { get; private set; }
-    [field: SerializeField][TextArea] public string Description { get; private set; }
+    public List<QuestObjectiveData> ObjectivesData => _objectivesData;
+    public List<QuestRewardData> RewardsData => _rewardsData;
 
     [SerializeField] private List<QuestObjectiveData> _objectivesData = new();
     [SerializeField] private List<QuestRewardData> _rewardsData = new();
-
-    public List<QuestObjectiveData> ObjectivesData => _objectivesData;
-    public List<QuestRewardData> RewardsData => _rewardsData;
 }

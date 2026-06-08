@@ -13,14 +13,14 @@ public class QuestSystem : IDisposable, ISavable
 
     public QuestSystem(GameEvents eventBus, List<QuestData> questDataList, ISaveRegistry saveRegistry)
     {
-        _eventBus = eventBus;
-
         foreach (var questData in questDataList)
         {
             var quest = new Quest(questData);
+            quest.QuestCompleted += OnQuestCompleted;
             _quests.Add(quest.Id, quest);
         }
 
+        _eventBus = eventBus;
         _eventBus.Subscribe<EnemyKilledMessage>(OnEnemyKilled);
         _eventBus.Subscribe<ItemGainedMessage>(OnItemGained);
 
@@ -33,9 +33,9 @@ public class QuestSystem : IDisposable, ISavable
         _eventBus.Unsubscribe<ItemGainedMessage>(OnItemGained);
     }
 
-    public QuestStatus GetQuestStatus(string questId)
+    private void OnQuestCompleted(string questId)
     {
-        return _quests.TryGetValue(questId, out var quest) ? quest.Status : QuestStatus.NotStarted;
+        var quest = GetQuest(questId);
     }
 
     public void ActivateQuest(string questId)
@@ -45,9 +45,11 @@ public class QuestSystem : IDisposable, ISavable
 
         quest.Activate();
 
+        UnityEngine.Debug.Log(questId + " Started");
+
         foreach (var objective in quest.Objectives)
         {
-            if (objective.Type == QuestObjectiveType.Collect)
+            if (objective.ObjectiveType == QuestObjectiveType.Collect)
             {
                 var query = new GetItemCountQuery { ItemId = objective.TargetId };
                 var amount = _eventBus.Query<GetItemCountQuery, int>(query);
@@ -56,14 +58,22 @@ public class QuestSystem : IDisposable, ISavable
         }
 
         OnQuestActivated?.Invoke(quest);
+        quest.CheckStatusTransition();
     }
 
-    public void CompleteQuest(string questId)
+    public QuestStatus GetQuestStatus(string questId)
     {
-        var quest = GetQuest(questId);
-        if (quest == null || quest.Status != QuestStatus.CanComplete) return;
+        return _quests.TryGetValue(questId, out var quest) ? quest.Status : QuestStatus.NotStarted;
+    }
 
-        quest.Complete();
+    public Quest GetQuest(string questId)
+    {
+        return _quests.TryGetValue(questId, out var quest) ? quest : null;
+    }
+
+    public List<Quest> GetAllQuests()
+    {
+        return _quests.Values.ToList();
     }
 
     private void OnEnemyKilled(EnemyKilledMessage e)
@@ -76,45 +86,29 @@ public class QuestSystem : IDisposable, ISavable
         _quests.Values.ToList().ForEach(quest => quest.HandleGameEvent(QuestObjectiveType.Collect, e.ItemId, e.Amount));
     }
 
-    public Quest GetQuest(string questId)
-    {
-        return _quests.TryGetValue(questId, out var quest) ? quest : null;
-    }
-
     public void Save(GameSaveData saveData)
     {
-        //var dto = new QuestSystemSaveDto();
+        foreach (var quest in _quests.Values)
+        {
+            if (quest.Status == QuestStatus.NotStarted) continue;
 
-        //foreach (var quest in _quests.Values)
-        //{
-        //    if (quest.Status == QuestStatus.NotStarted) continue;
-
-        //    dto.TrackedQuests.Add(new QuestSaveDto
-        //    {
-        //        QuestId = quest.Id,
-        //        Status = quest.Status,
-        //        ObjectivesProgress = quest.Objectives.Select(o => o.CurrentAmount).ToList()
-        //    });
-        //}
-
-        //return dto;
+            saveData.QuestSystemData.Add(new QuestSaveData
+            {
+                QuestId = quest.Id,
+                Status = quest.Status,
+                ObjectivesProgress = quest.Objectives.Select(o => o.CurrentAmount).ToList()
+            });
+        }
     }
 
     public void Load(GameSaveData saveData)
     {
-        //if (dto == null || dto.TrackedQuests == null) return;
-
-        //foreach (var quest in _quests.Values)
-        //{
-        //    quest.RestoreState(QuestStatus.NotStarted, quest.Objectives.Select(_ => 0).ToList());
-        //}
-
-        //foreach (var savedQuestDto in dto.TrackedQuests)
-        //{
-        //    if (_quests.TryGetValue(savedQuestDto.QuestId, out var quest))
-        //    {
-        //        quest.RestoreState(savedQuestDto.Status, savedQuestDto.ObjectivesProgress);
-        //    }
-        //}
+        foreach (var questSaveData in saveData.QuestSystemData)
+        {
+            if (_quests.TryGetValue(questSaveData.QuestId, out var quest))
+            {
+                quest.RestoreState(questSaveData.Status, questSaveData.ObjectivesProgress);
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ public abstract class Enemy : MonoBehaviour, IDamagable
         //SendLootToPlayer();
     }
 
-    public virtual void TakeDamage(float value)
+    public virtual void TakeDamage(DamageData damageInfo)
     {
     }
 

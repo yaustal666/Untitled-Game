@@ -1,24 +1,14 @@
 using Cysharp.Threading.Tasks;
-using Reflex.Attributes;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class DungeonEntryPoint : MonoBehaviour
+public sealed class DungeonEntryPoint : EntryPoint
 {
-    [Inject] private Player _player;
-    [Inject] private PlayerSpawner _playerSpawner;
-
     [SerializeField] private GameObject dungeonPrefab;
-    [SerializeField] private CinemachineCamera mainCamera;
 
-    private async void Start()
-    {
-        await SetupScene();
-    }
-
-    private async UniTask SetupScene()
+    protected override async UniTask SetupScene()
     {
         var dungeonObject = Instantiate(dungeonPrefab);
         GameObjectInjector.InjectRecursive(dungeonObject, gameObject.scene.GetSceneContainer());

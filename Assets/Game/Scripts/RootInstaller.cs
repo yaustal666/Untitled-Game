@@ -19,6 +19,7 @@ public class RootInstaller : MonoBehaviour, IInstaller
 
         containerBuilder.RegisterType(typeof(SaveSystem), new[] { typeof(SaveSystem), typeof(ISaveRegistry) }, Lifetime.Singleton, Resolution.Eager);
         containerBuilder.RegisterType(typeof(Game), Lifetime.Singleton, Resolution.Eager);
+        containerBuilder.RegisterType(typeof(LocalizationSystem), Lifetime.Singleton, Resolution.Eager);
     }
 
     private void StartGame(Container container)

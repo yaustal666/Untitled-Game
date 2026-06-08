@@ -5,5 +5,6 @@ public class GameSettings : ScriptableObject
 {
     public GameObject PlayerPrefab;
     public GameObject UIRootPrefab;
-    public TextAsset Dialogs;
+    public TextAsset Story;
+    public string Language;
 }

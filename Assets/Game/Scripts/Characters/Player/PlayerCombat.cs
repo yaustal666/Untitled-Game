@@ -52,7 +52,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void DealDamage(string attackName, IDamagable damagable)
     {
-        damagable.TakeDamage(10f);
+        DamageData damageInfo = new DamageData
+        {
+            Damage = 10f
+        };
+
+        damagable.TakeDamage(damageInfo);
     }
     void Update()
     {

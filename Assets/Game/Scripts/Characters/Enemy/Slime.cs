@@ -137,17 +137,17 @@ public class Slime : Enemy
         }
     }
 
-    public override void TakeDamage(float value)
+    public override void TakeDamage(DamageData damageInfo)
     {
         if (_currentState == EnemyState.Dead) return;
-        if (_health.CurrentHealth <= value)
+        if (_health.CurrentHealth <= damageInfo.Damage)
         {
-            _health.TakeDamage(value);
+            _health.TakeDamage(damageInfo.Damage);
             DamageFlash().Forget();
             return;
         }
         _anim.SetTrigger("damage");
-        _health.TakeDamage(value);
+        _health.TakeDamage(damageInfo.Damage);
         DamageFlash().Forget();
     }
 

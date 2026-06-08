@@ -1,0 +1,21 @@
+{
+    "items": {
+        "item_stick": {
+            "name": "Ветка",
+            "description": "Самая обычная ветка"
+        },
+        "item_apple": {
+            "name": "Яблоко",
+            "description": "Вкусно!"
+        }
+    },
+    "quests": {
+        "quest_basic_quest": {
+            "title": "Базовый квест",
+            "description": "Соберите 2 ветки",
+            "objectives": [
+                "Соберите 2 ветки"
+            ]
+        }
+    }
+}

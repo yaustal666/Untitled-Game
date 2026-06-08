@@ -1,18 +1,11 @@
-using Reflex.Attributes;
+using Cysharp.Threading.Tasks;
 using Reflex.Extensions;
 using Reflex.Injectors;
-using Unity.Cinemachine;
 using UnityEngine;
 
-public class HomeEntryPoint : MonoBehaviour
+public sealed class HomeEntryPoint : EntryPoint
 {
-    [Inject] private Player _player;
-    [Inject] private PlayerSpawner _playerSpawner;
-
-    public Transform playerSpawnPoint;
-    [SerializeField] private CinemachineCamera mainCamera;
-
-    private void Start()
+    protected override async UniTask SetupScene()
     {
         var sceneContainer = gameObject.scene.GetSceneContainer();
 
