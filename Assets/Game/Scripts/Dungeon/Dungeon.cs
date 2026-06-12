@@ -110,24 +110,14 @@ public class Dungeon : MonoBehaviour
         nextRoom.Enter();
     }
 
-    public Vector2Int DirectionToVec(DoorDirection direction)
+    public Vector2Int DirectionToVec(DoorDirection direction) => direction switch
     {
-        switch (direction)
-        {
-            case DoorDirection.Top:
-                return new Vector2Int(-1, 0);
-            case DoorDirection.Right:
-                return new Vector2Int(0, 1);
-            case DoorDirection.Bottom:
-                return new Vector2Int(1, 0);
-            case DoorDirection.Left:
-                return new Vector2Int(0, -1);
-            default:
-                break;
-        }
-
-        return new Vector2Int(0, 0);
-    }
+        DoorDirection.Top => new Vector2Int(-1, 0),
+        DoorDirection.Right => new Vector2Int(0, 1),
+        DoorDirection.Bottom => new Vector2Int(1, 0),
+        DoorDirection.Left => new Vector2Int(0, -1),
+        _ => new Vector2Int(0, 0)
+    };
 
     public Vector3 GetStartRoomPosition()
     {

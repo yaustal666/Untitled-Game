@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c86cc2e523e7647b21c8afe2398e4f, type: 3}
+  m_Name: Homing Projectile
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
+  Sprite: {fileID: 1852280354991095362, guid: a3207098154eedb4faa544e0d42299c5, type: 3}
+  AnimationClip: {fileID: 0}
+  FireEffectPrefab: {fileID: 0}
+  HitEffectPrefab: {fileID: 0}
+  Lifetime: 5
+  Knockback: 10
+  BaseDamage: 10
+  Speed: 12
+  MovementType: 2
+  param1: 100
+  param2: 4
+  param3: 0

@@ -1,24 +1,11 @@
-using UnityEngine;
-
-public class ProjectileLineMovement : IProjectileMovement
+public sealed class ProjectileLineMovement : ProjectileMovement
 {
-    private Rigidbody2D _rb;
-    private Vector2 _direction;
-    private float _speed;
-
-    public ProjectileLineMovement(Projectile projectile)
+    public ProjectileLineMovement(Projectile projectile) : base(projectile)
     {
-        _rb = projectile._rb;
-        _speed = projectile._data.speed;
     }
 
-    public void SetTarget(Transform target, Transform projectile)
+    public override void MoveToTarget()
     {
-        _direction = (Vector2) (target.position - projectile.position).normalized;
-    }
-
-    public void Move()
-    {
-        _rb.linearVelocity = _direction * _speed;
+        _projectileRB.linearVelocity = _direction * _speed;
     }
 }

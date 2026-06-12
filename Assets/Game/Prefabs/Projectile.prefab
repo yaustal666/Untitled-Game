@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2242127245720587397}
   - component: {fileID: 4230601700648636969}
   - component: {fileID: 8843848250863773652}
-  - component: {fileID: 1352360672007977958}
   - component: {fileID: 2329040650141162253}
   - component: {fileID: 477875482950375016}
   - component: {fileID: 5620538826114253917}
@@ -136,22 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea024520472c7d4b94deda4c17a3cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  _view: {fileID: 1352360672007977958}
-  _data: {fileID: 0}
---- !u!114 &1352360672007977958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6545511704491719598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462644d4c1907914fbad2c31e3d71652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileView
-  spriteRenderer: {fileID: 2242127245720587397}
-  _animation: {fileID: 2329040650141162253}
+  _sr: {fileID: 0}
+  _animation: {fileID: 0}
+  _hitbox: {fileID: 0}
 --- !u!111 &2329040650141162253
 Animation:
   m_ObjectHideFlags: 0

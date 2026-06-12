@@ -3,86 +3,64 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Pool;
 
+public struct ProjectileTarget
+{
+    public Transform TargetTransform;
+    public Vector3 TargetPosition;
+}
+
 public class Projectile : MonoBehaviour
 {
-    public Rigidbody2D _rb { get; private set; }
-    [SerializeField] private ProjectileView _view;
+    public Rigidbody2D RB { get; private set; }
+    public ProjectileData Data { get; private set; }
 
-    public ProjectileData _data;
+    private SpriteRenderer _sr;
+    private Animation _animation;
     private IObjectPool<Projectile> _originPool;
-
-    private Transform _target;
-    private bool _isLaunched = false;
-
+    private ProjectileMovement _movement;
     private CancellationTokenSource _lifetimeCts;
-
-    private IProjectileMovement  _movement;
-
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-       _view = GetComponentInChildren<ProjectileView>();
-    }
+    private bool _isLaunched = false;
 
     public void Initialize(ProjectileData data, IObjectPool<Projectile> pool)
     {
-        _data = data;
+        Data = data;
         _originPool = pool;
+        _sr.sprite = data.Sprite;
+        _animation.clip = data.AnimationClip;
 
-        switch (data.movementType)
+        _movement = data.MovementType switch
         {
-            case ProjectileMovementType.Line:
-                _movement = new ProjectileLineMovement(this);
-                break;
-            case ProjectileMovementType.Wave:
-                break;
-            case ProjectileMovementType.Homing:
-                break;
-        }
+            ProjectileMovementType.Line => new ProjectileLineMovement(this),
+            ProjectileMovementType.Wave => new ProjectileWaveMovement(this),
+            ProjectileMovementType.Homing => new ProjectileHomingMovement(this),
+            _ => new ProjectileLineMovement(this)
+        };
     }
 
-    public void Launch(Transform target)
+    private void Awake()
     {
-        _target = target;
+        RB = GetComponent<Rigidbody2D>();
+        _sr = GetComponent<SpriteRenderer>();
+        _animation = GetComponent<Animation>();
+    }
 
-        _rb.linearVelocity = Vector2.zero;
-        _rb.angularVelocity = 0f;
+    private void OnDestroy() => CancelLifetimeTimer();
 
-        _view.Initialize(_data);
+    public void Launch(ProjectileTarget target)
+    {
         _isLaunched = true;
-
         StartLifetimeTimer();
-        _movement.SetTarget(_target, transform);
+        _movement.SetTarget(target);
+        _animation.Play();
     }
 
     private void FixedUpdate()
     {
         if (!_isLaunched) return;
-
-        _movement.Move();
-
-        //if (_data.movementType == MovementType.Wave)
-        //{
-        //    Vector2 forwardDir = transform.right;
-        //    Vector2 perpendicular = new Vector2(-forwardDir.y, forwardDir.x);
-
-        //    Vector2 baseVelocity = forwardDir * _data.baseSpeed;
-        //    Vector2 waveVelocity = perpendicular * Mathf.Cos(_timeCounter * _data.customParameterA) * _data.customParameterA * _data.customParameterB;
-
-        //    _rb.linearVelocity = baseVelocity + waveVelocity;
-        //}
-        //else if (_data.movementType == MovementType.Homing && _target != null)
-        //{
-        //    // customParameterA = Скорость поворота ракеты
-        //    Vector2 direction = (Vector2)_target.position - _rb.position;
-        //    direction.Normalize();
-
-        //    float rotateAmount = Vector3.Cross(direction, transform.right).z;
-        //    _rb.angularVelocity = -rotateAmount * _data.customParameterA;
-        //    _rb.linearVelocity = transform.right * _data.baseSpeed;
-        //}
+        _movement.MoveToTarget();
     }
 
+    // TODO: remake physics layers and change it
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!_isLaunched) return;
@@ -91,17 +69,18 @@ public class Projectile : MonoBehaviour
         {
             if (collision.TryGetComponent<Hurtbox>(out var hurtbox))
             {
-                DamageData damageInfo = new DamageData { 
-                    Damage = _data.baseDamage
+                DamageData damageInfo = new DamageData
+                {
+                    Damage = Data.BaseDamage
                 };
                 hurtbox.Owner.TakeDamage(damageInfo);
             }
-            _view.PlayHitEffect(_data, transform.position);
+            PlayHitEffect(Data, transform.position);
             ReturnToPool();
         }
         else if (collision.CompareTag("Wall"))
         {
-            _view.PlayHitEffect(_data, transform.position);
+            PlayHitEffect(Data, transform.position);
             ReturnToPool();
         }
     }
@@ -110,7 +89,7 @@ public class Projectile : MonoBehaviour
     {
         CancelLifetimeTimer();
         _lifetimeCts = new CancellationTokenSource();
-        ApplyLifetimeAsync(_data.lifetime, _lifetimeCts.Token).Forget();
+        ApplyLifetimeAsync(Data.Lifetime, _lifetimeCts.Token).Forget();
     }
 
     private async UniTaskVoid ApplyLifetimeAsync(float duration, CancellationToken token)
@@ -128,6 +107,22 @@ public class Projectile : MonoBehaviour
         _originPool?.Release(this);
     }
 
+    public void PlayHitEffect(ProjectileData data, Vector3 position)
+    {
+        if (data.HitEffectPrefab != null)
+        {
+            Instantiate(data.HitEffectPrefab, position, Quaternion.identity);
+        }
+    }
+
+    public void PlayFireEffect(ProjectileData data, Vector3 position)
+    {
+        if (data.FireEffectPrefab != null)
+        {
+            Instantiate(data.FireEffectPrefab, position, Quaternion.identity);
+        }
+    }
+
     private void CancelLifetimeTimer()
     {
         if (_lifetimeCts != null)
@@ -137,6 +132,4 @@ public class Projectile : MonoBehaviour
             _lifetimeCts = null;
         }
     }
-
-    private void OnDestroy() => CancelLifetimeTimer();
 }

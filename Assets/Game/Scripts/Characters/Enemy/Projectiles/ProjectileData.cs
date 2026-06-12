@@ -8,22 +8,21 @@ public enum ProjectileMovementType
 }
 
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "ScriptableObjects/ProjectileData")]
-
 public class ProjectileData : ScriptableObject
 {
-    public Sprite sprite;
-    public AnimationClip animationClip;
+    public Sprite Sprite;
+    public AnimationClip AnimationClip;
 
-    public GameObject fireEffectPrefab;
-    public GameObject hitEffectPrefab;
+    public GameObject FireEffectPrefab;
+    public GameObject HitEffectPrefab;
 
-    public float lifetime;
-    public float knockback;
-    public float baseDamage;
-    public float speed;
+    public float Lifetime;
+    public float Knockback;
+    public float BaseDamage;
+    public float Speed;
 
-    [Header("Movement type and generic params")]
-    public ProjectileMovementType movementType;
+    [Header("Movement Type")]
+    public ProjectileMovementType MovementType;
     public float param1;
     public float param2;
     public float param3;

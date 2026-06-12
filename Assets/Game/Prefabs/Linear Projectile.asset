@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8c86cc2e523e7647b21c8afe2398e4f, type: 3}
-  m_Name: Projectile Data
+  m_Name: Linear Projectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  sprite: {fileID: 1852280354991095362, guid: a3207098154eedb4faa544e0d42299c5, type: 3}
-  animationClip: {fileID: 0}
-  fireEffectPrefab: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
-  lifetime: 3
-  knockback: 5
-  baseDamage: 10
-  speed: 15
-  movementType: 0
-  param1: 0
-  param2: 0
+  Sprite: {fileID: 1852280354991095362, guid: a3207098154eedb4faa544e0d42299c5, type: 3}
+  AnimationClip: {fileID: 0}
+  FireEffectPrefab: {fileID: 0}
+  HitEffectPrefab: {fileID: 0}
+  Lifetime: 5
+  Knockback: 10
+  BaseDamage: 10
+  Speed: 12
+  MovementType: 2
+  param1: 100
+  param2: 4
   param3: 0

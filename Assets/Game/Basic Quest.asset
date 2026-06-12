@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Basic Quest
   m_EditorClassIdentifier: Assembly-CSharp::QuestData
   <Id>k__BackingField: quest_basic_quest
-  <Title>k__BackingField: 
-  <Description>k__BackingField: Gather 5 sticks
   _objectivesData:
   - ObjectiveType: 1
     TargetId: item_stick
@@ -23,6 +21,5 @@ MonoBehaviour:
   _rewardsData:
   - RewardType: 0
     ItemId: item_apple
-    StatId: 
     ItemAmount: 10
-    StatAmount: 0
+    CurrencyAmount: 0
