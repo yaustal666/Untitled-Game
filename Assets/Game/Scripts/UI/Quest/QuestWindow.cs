@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestWindow : MonoBehaviour
+public class QuestWindow : UIWindow
 {
     [Inject] private QuestSystem _questSystem;
     [Inject] private LocalizationSystem _loc;
@@ -40,7 +40,7 @@ public class QuestWindow : MonoBehaviour
             button.GetComponentInChildren<TMP_Text>().text = questInfo.Title;
         }
 
-        UpdateQuestView();
+        Refresh();
     }
 
     public void ShowQuestDetails(int index)
@@ -56,9 +56,17 @@ public class QuestWindow : MonoBehaviour
         }
     }
 
-    private void UpdateQuestView()
+    private void Refresh()
     {
 
     }
 
+    public override void Close()
+    {
+        questTitle.text = "";
+        questDescription.text = "";
+        questObjectives.text = "";
+        questRewards.text = "";
+        gameObject.SetActive(false);
+    }
 }

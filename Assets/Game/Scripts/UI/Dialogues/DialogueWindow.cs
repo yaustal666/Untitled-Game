@@ -1,41 +1,29 @@
 using Ink.Runtime;
 using Reflex.Attributes;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueWindow : MonoBehaviour
+public class DialogueWindow : UIWindow
 {
     [Inject] DialogueSystem _dialogueSystem;
 
-    public event Action DialogueStarted;
-    public event Action DialogueEnded;
-
-    [SerializeField] private GameObject windowContainer;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Transform choicesContainer;
     [SerializeField] private Button choiceButtonPrefab;
 
     private List<Button> _activeButtons = new List<Button>();
 
-    private void Start()
+    private void Awake()
     {
-        _dialogueSystem.EnterDialogue += () =>
-        {
-            windowContainer.SetActive(true);
-            DialogueStarted?.Invoke();
-        };
-
         _dialogueSystem.OnTextReceived += ShowText;
         _dialogueSystem.OnChoicesReceived += ShowChoices;
-        _dialogueSystem.ExitDialogue += CloseWindow;
     }
 
     private void Update()
     {
-        if (windowContainer.activeSelf && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             _dialogueSystem.OnPlayerPressedNext();
         }
@@ -44,7 +32,6 @@ public class DialogueWindow : MonoBehaviour
     public void ShowText(string text)
     {
         dialogueText.text = text;
-
         ClearChoices();
     }
 
@@ -73,12 +60,11 @@ public class DialogueWindow : MonoBehaviour
         }
     }
 
-    public void CloseWindow()
+    public override void Close()
     {
         dialogueText.text = " ";
         ClearChoices();
-        windowContainer.SetActive(false);
-        DialogueEnded?.Invoke();
+        gameObject.SetActive(false);
     }
 
     private void ClearChoices()

@@ -30,5 +30,5 @@ public class LootUnpacker : IDisposable
     {
         _gameEvents.Unsubscribe<EnemyDeathMessage>(UnpackEnemyLoot);
     }
-    
+
 }

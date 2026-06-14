@@ -4,13 +4,13 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class TopDownPathfinding : MonoBehaviour, IPathfinding
 {
+    public Vector2 Direction { get; private set; }
+    public float DistanceToTarget { get; private set; }
+
     [SerializeField] private float movementSpeed = 3.5f;
     [SerializeField] private bool useWandering = false;
     [SerializeField] private float waveFrequency = 3f;
     [SerializeField] private float waveMagnitude = 1.5f;
-
-    public Vector2 Direction { get; private set; }
-    public float DistanceToTarget { get; private set; }
 
     private NavMeshAgent agent;
     private Transform targetTransform;

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IDamagable
 {
     public void TakeDamage(DamageData damageInfo);
@@ -6,4 +8,5 @@ public interface IDamagable
 public struct DamageData
 {
     public float Damage;
+    public Vector2 DamageSourcePosition;
 }

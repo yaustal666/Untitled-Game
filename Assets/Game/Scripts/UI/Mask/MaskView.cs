@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MaskView : MonoBehaviour
+public class MaskView : UIWindow
 {
     [Inject] private Mask _maskModel;
 

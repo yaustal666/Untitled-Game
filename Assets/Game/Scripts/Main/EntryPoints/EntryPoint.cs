@@ -16,7 +16,8 @@ public abstract class EntryPoint : MonoBehaviour
         await SetupScene();
     }
 
-    protected virtual async UniTask SetupScene() { 
+    protected virtual async UniTask SetupScene()
+    {
         await UniTask.Yield();
     }
 }

@@ -1,4 +1,4 @@
 EXTERNAL startQuest(questId)
 
-INCLUDE Bob.ink
+INCLUDE Wizard.ink
 

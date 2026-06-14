@@ -1,36 +1,45 @@
 using UnityEngine;
 
-public class PlayerMenu : MonoBehaviour
+public class PlayerMenu : UIWindow
 {
     [SerializeField] private InventoryView _inventoryView;
     [SerializeField] private MaskView _maskUpgradeWindow;
     [SerializeField] private QuestWindow _questWindow;
 
-    private GameObject _currentWindow;
+    private UIWindow _currentWindow;
+    private void Awake()
+    {
+        _inventoryView.Close();
+        //_maskUpgradeWindow.Close();
+        _questWindow.Close();
+    }
 
     public void ShowInventory()
     {
-        _currentWindow = _inventoryView.gameObject;
-        _currentWindow.SetActive(true);
+        CloseCurrentWindow();
+        _currentWindow = _inventoryView;
+        _currentWindow.Open();
         _inventoryView.Refresh();
     }
 
     public void ShowUpgradeMask()
     {
-        _currentWindow = _maskUpgradeWindow.gameObject;
-        _currentWindow.SetActive(true);
+        CloseCurrentWindow();
+        _currentWindow = _maskUpgradeWindow;
+        _currentWindow.Open();
         //_maskUpgradeWindow.Refresh();
     }
 
     public void ShowQuestWindow()
     {
-        _currentWindow = _questWindow.gameObject;
-        _currentWindow.SetActive(true);
+        CloseCurrentWindow();
+        _currentWindow = _questWindow;
+        _currentWindow.Open();
         //_questWindow.Refresh();
     }
 
     public void CloseCurrentWindow()
     {
-        _currentWindow?.SetActive(false);
+        _currentWindow?.Close();
     }
 }

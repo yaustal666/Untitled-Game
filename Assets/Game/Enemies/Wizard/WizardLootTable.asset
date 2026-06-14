@@ -17,3 +17,15 @@ MonoBehaviour:
     DropChance: 1
     Amount: 2
     itemRef: {fileID: 11400000, guid: d3100d625a0172744917fe161e6039cb, type: 2}
+  - itemID: item_apple
+    DropChance: 1
+    Amount: 2
+    itemRef: {fileID: 11400000, guid: 693ac12a46d42f1459e89ca9397ed62a, type: 2}
+  - itemID: item_blue_gem
+    DropChance: 1
+    Amount: 2
+    itemRef: {fileID: 11400000, guid: 2aa9913ae53ee74429226ed3e57170c6, type: 2}
+  - itemID: item_super_gem
+    DropChance: 1
+    Amount: 2
+    itemRef: {fileID: 11400000, guid: 84d004a05eeaaba48a1aa8ee7572c72e, type: 2}

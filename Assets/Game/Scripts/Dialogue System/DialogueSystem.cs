@@ -3,12 +3,13 @@ using Ink.Runtime;
 using Reflex.Attributes;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class DialogueSystem : ISavable, IDisposable
 {
     [Inject] private QuestSystem _questSystem;
 
-    public event Action EnterDialogue;
+    public event Action<WindowType> EnterDialogue;
     public event Action<string> OnTextReceived;
     public event Action<List<Choice>> OnChoicesReceived;
     public event Action ExitDialogue;
@@ -51,10 +52,11 @@ public class DialogueSystem : ISavable, IDisposable
 
     public void StartDialogue(string knotName)
     {
+        Debug.Log("START DIALOGUE");
         if (_isDialogueActive) return;
         _isDialogueActive = true;
 
-        EnterDialogue?.Invoke();
+        EnterDialogue?.Invoke(WindowType.Dialogue);
         _story.ChoosePathString(knotName);
         AdvanceDialogue();
     }

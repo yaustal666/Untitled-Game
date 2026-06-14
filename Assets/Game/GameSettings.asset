@@ -15,4 +15,4 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 2294985090781592901, guid: ec7bd3b9cd6b7b0419179489ed6dffcb, type: 3}
   UIRootPrefab: {fileID: 5120681812102102693, guid: 33001d33ccdaea746aeffbb49dc4c127, type: 3}
   Story: {fileID: 4900000, guid: 79b60f76aac277f42ad763e0ec19889b, type: 3}
-  Language: ru
+  Language: en

@@ -44,7 +44,6 @@ public class Player : IDisposable
 
     public void SetMode(PlayerMode mode)
     {
-        Debug.Log("SWITCH MODE PLAYER");
         CurrentMode = mode;
         PlayerChangedMode?.Invoke(mode);
     }

@@ -2,19 +2,18 @@ using Reflex.Attributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryView : MonoBehaviour
+public class InventoryView : UIWindow
 {
     [Inject] private ItemLibrary _itemLib;
     [Inject] private Player player;
-    [SerializeField] private List<InventoryItemView> _items = new();
+
     [SerializeField] private GameObject _content;
     [SerializeField] private GameObject _itemViewPrefab;
-
     [SerializeField] private ItemDescriptionView _descriptionPanel;
+    [SerializeField] private List<InventoryItemView> _items = new();
 
     private InventoryItemView _currentItem;
 
-    [ContextMenu("Refresh")]
     public void Refresh()
     {
         var itemList = player.Inventory.GetItems();
@@ -45,5 +44,18 @@ public class InventoryView : MonoBehaviour
         _currentItem?.Unchoose();
         _currentItem = _items[index];
         _descriptionPanel.ShowItem(item);
+    }
+
+    public void Clear()
+    {
+        _currentItem?.Unchoose();
+        _currentItem = null;
+        _descriptionPanel.Clear();
+    }
+
+    public override void Close()
+    {
+        Clear();
+        gameObject.SetActive(false);
     }
 }

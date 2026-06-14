@@ -1,129 +1,61 @@
-using Reflex.Attributes;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIRoot : MonoBehaviour
 {
-    [Inject] private InputReader _inputReader;
-    [Inject] private Game _game;
+    public event Action WindowClosed;
+    public event Action MainMenuPressed;
 
-    [SerializeField] private PauseMenu _pauseMenu;
-    [SerializeField] private HUD _HUD;
-    [SerializeField] private PlayerMenu _playerMenu;
-    [SerializeField] private DialogueWindow _dialodueWindow;
+    public bool IsWindowOpened => _windowStack.Count > 0;
+    public UIWindow ActiveWindow => _windowStack.Peek();
 
-    private bool _windowOpened;
+    [SerializeField] private List<UIWindow> _windows = new();
+    private Dictionary<Type, UIWindow> _mappingTypeToWindows = new();
+    private Stack<UIWindow> _windowStack = new();
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        _dialodueWindow.DialogueStarted += OpenDialogue;
-        _dialodueWindow.DialogueEnded += CloseWindow;
     }
 
     private void Start()
     {
-        Debug.Log(_game);
-        _inputReader.PausePressed += OnPausePressed;
-        _inputReader.InventoryPressed += OpenInventory;
-        _inputReader.QuestPressed += OpenQuestWindow;
-        _inputReader.MaskPressed += OpenUpgradeMask;
-
-        _pauseMenu.ResumePressed += CloseWindow;
-        _inputReader.UnPausePressed += CloseWindow;
-    }
-
-    private void OnPausePressed()
-    {
-        if (_windowOpened)
+        foreach (var window in _windows)
         {
-            CloseWindow();
-        }
-        else
-        {
-            OpenPause();
+            var windowType = window.GetType();
+            _mappingTypeToWindows.Add(windowType, window);
+            window.Close();
         }
     }
 
-    public void OpenPause()
+    public void OpenWindow<T>(Action<T> setup = null) where T : UIWindow
     {
-        if (!_windowOpened)
+        UIWindow window;
+        if (!_mappingTypeToWindows.TryGetValue(typeof(T), out window))
         {
-            _game.Pause(true);
-            _pauseMenu.gameObject.SetActive(true);
-            _windowOpened = true;
+            Debug.LogError("Requested non existent window Type");
+            return;
         }
-    }
 
-    public void OpenInventory()
-    {
-        if (!_windowOpened)
+        if (setup != null)
         {
-            _playerMenu.gameObject.SetActive(true);
-            _game.Pause(true);
-            _playerMenu.ShowInventory();
-            _windowOpened = true;
+            setup.Invoke((T)window);
         }
-    }
 
-    public void OpenQuestWindow()
-    {
-        if (!_windowOpened)
-        {
-            _playerMenu.gameObject.SetActive(true);
-            _game.Pause(true);
-            _playerMenu.ShowQuestWindow();
-            _windowOpened = true;
-        }
-    }
-
-    public void OpenUpgradeMask()
-    {
-        if (!_windowOpened)
-        {
-            _playerMenu.gameObject.SetActive(true);
-            _game.Pause(true);
-            _playerMenu.ShowUpgradeMask();
-            _windowOpened = true;
-        }
-    }
-
-    public void OpenDialogue()
-    {
-        if (!_windowOpened)
-        {
-            _game.Pause(true);
-            _dialodueWindow.gameObject.SetActive(true);
-            _windowOpened = true;
-        }
+        window.Open();
+        _windowStack.Push(window);
     }
 
     public void CloseWindow()
     {
-        _pauseMenu.gameObject.SetActive(false);
-
-        _playerMenu.CloseCurrentWindow();
-        _playerMenu.gameObject.SetActive(false);
-
-        _dialodueWindow.gameObject.SetActive(false);
-
-        _game.Pause(false);
-        _windowOpened = false;
+        var window = _windowStack.Pop();
+        window.Close();
+        WindowClosed.Invoke();
     }
 
-    public void EnableHUD(bool enabled)
+    public void ExitToMainMenu()
     {
-        _HUD.gameObject.SetActive(enabled);
-    }
-
-    private void OnDestroy()
-    {
-        _dialodueWindow.DialogueStarted -= OpenDialogue;
-        _dialodueWindow.DialogueEnded -= CloseWindow;
-
-        _inputReader.PausePressed -= OnPausePressed;
-        _inputReader.InventoryPressed -= OpenInventory;
-
-        _pauseMenu.ResumePressed -= CloseWindow;
-        _inputReader.UnPausePressed -= CloseWindow;
+        MainMenuPressed?.Invoke();
     }
 }

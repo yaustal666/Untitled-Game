@@ -22,17 +22,4 @@ public abstract class Enemy : MonoBehaviour, IDamagable
     public virtual void TakeDamage(DamageData damageInfo)
     {
     }
-
-    //public void SendLootToPlayer()
-    //{
-    //    Debug.Log("Send Call");
-    //    //var player = Player.Instance;
-    //    //foreach (var item in loot.entries)
-    //    //{
-    //    //    if (Chance.Roll(item.DropChance))
-    //    //    {
-    //    //        //player.GetItem(item.itemID, item.Amount);
-    //    //    }
-    //    //}
-    //}
 }

@@ -18,4 +18,11 @@ public class ItemDescriptionView : MonoBehaviour
 
         _itemDescription.text = itemInfo.Description;
     }
+
+    public void Clear()
+    {
+        _itemIcon.sprite = null;
+        _itemIcon.enabled = false;
+        _itemDescription.text = "";
+    }
 }

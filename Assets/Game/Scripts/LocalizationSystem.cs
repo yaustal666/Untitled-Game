@@ -68,7 +68,8 @@ public class LocalizationSystem
 
     public ItemInfo GetItemInfo(string itemId)
     {
-        if (_items.TryGetValue(itemId, out var itemInfo)) {
+        if (_items.TryGetValue(itemId, out var itemInfo))
+        {
             return itemInfo;
         }
 

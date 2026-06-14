@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class SaveSystem : ISaveRegistry
 {
+    public bool HasSaveFile => File.Exists(savePath);
+
     private string savePath;
     private List<ISavable> listSave = new();
-
-    public bool HasSaveFile => File.Exists(savePath);
 
     public SaveSystem()
     {

@@ -2,7 +2,6 @@
 
 public class GroundCheck : MonoBehaviour
 {
-    [Header("Ground Detection")]
     [SerializeField] private LayerMask _whatIsGround;
     [SerializeField] private float _groundCheckRadius = 0.2f;
     [SerializeField] private Transform _groundCheckPoint;

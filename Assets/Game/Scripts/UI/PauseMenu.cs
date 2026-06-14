@@ -1,12 +1,10 @@
 using Reflex.Attributes;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : UIWindow
 {
-    public event Action ResumePressed;
-    [Inject] private Game _game;
+    [Inject] private UIRoot _ui;
 
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _optionsButton;
@@ -20,12 +18,11 @@ public class PauseMenu : MonoBehaviour
 
     private void ResumeGame()
     {
-        ResumePressed?.Invoke();
+        _ui.CloseWindow();
     }
 
     private void ExitToMainMenu()
     {
-        _game.ExitToMainMenu();
+        _ui.ExitToMainMenu();
     }
-
 }

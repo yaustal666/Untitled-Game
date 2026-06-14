@@ -64,7 +64,7 @@ public class Quest
         }
     }
 
-// TODO: search linQ
+    // TODO: search linQ
     public void RestoreState(QuestStatus savedStatus, List<int> savedProgress)
     {
         Status = savedStatus;

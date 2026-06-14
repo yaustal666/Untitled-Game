@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
-using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum EnemyState
 {
@@ -15,7 +15,9 @@ public class Slime : Enemy
 {
     [Inject] private GameEvents _events;
     [SerializeField] private LootTable _lootTable;
-
+    private Rigidbody2D _rb;
+    [SerializeField] private float knockbackForce;
+    [SerializeField] private int knockbackDelay;
     private float damageFlashTime = 0.25f;
     private Material _mat;
 
@@ -34,6 +36,7 @@ public class Slime : Enemy
 
     private void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _pathfinding = GetComponent<IPathfinding>();
         _detector.PlayerDetected += OnPlayerDetected;
         _currentState = EnemyState.Idle;
@@ -105,6 +108,7 @@ public class Slime : Enemy
 
     private void EnterChasingState()
     {
+        _anim.SetBool("Walking", true);
         _currentState = EnemyState.Chasing;
         _pathfinding.SetNavigationActive(true);
         _pathfinding.FollowTarget(_target);
@@ -126,7 +130,8 @@ public class Slime : Enemy
 
     private void HandleAttackingState()
     {
-        if(Time.time - _lastSpitTime > _spitCooldown) {
+        if (Time.time - _lastSpitTime > _spitCooldown)
+        {
             _lastSpitTime = Time.time;
             _anim.SetTrigger("attack");
         }
@@ -149,6 +154,7 @@ public class Slime : Enemy
         _anim.SetTrigger("damage");
         _health.TakeDamage(damageInfo.Damage);
         DamageFlash().Forget();
+        ApplyKnockback(damageInfo);
     }
 
     private async UniTask DamageFlash()
@@ -158,4 +164,28 @@ public class Slime : Enemy
         _mat.SetFloat("_FlashPower", 0f);
     }
 
+    private void ApplyKnockback(DamageData damageInfo)
+    {
+        Vector2 myPosition = transform.position;
+        Vector2 knockbackDirection = (myPosition - damageInfo.DamageSourcePosition).normalized;
+
+        _pathfinding.SetNavigationActive(false);
+        _rb.linearVelocity = knockbackDirection * knockbackForce;
+        DelayedEnableNavigation().Forget();
+    }
+
+    private async UniTask DelayedEnableNavigation()
+    {
+        await UniTask.Delay(knockbackDelay);
+        _rb.linearVelocity = Vector2.zero;
+        if (_currentState != EnemyState.Dead && _target != null)
+        {
+            _pathfinding.SetNavigationActive(true);
+            _pathfinding.FollowTarget(_target);
+        }
+        else if (_currentState != EnemyState.Dead && _target == null)
+        {
+            _pathfinding.SetNavigationActive(true);
+        }
+    }
 }

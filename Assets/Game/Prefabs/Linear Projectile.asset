@@ -20,7 +20,7 @@ MonoBehaviour:
   Knockback: 10
   BaseDamage: 10
   Speed: 12
-  MovementType: 2
-  param1: 100
-  param2: 4
+  MovementType: 0
+  param1: 0
+  param2: 0
   param3: 0

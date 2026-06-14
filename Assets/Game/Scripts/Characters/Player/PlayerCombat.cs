@@ -1,5 +1,4 @@
 using Reflex.Attributes;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,7 +53,8 @@ public class PlayerCombat : MonoBehaviour
     {
         DamageData damageInfo = new DamageData
         {
-            Damage = 10f
+            Damage = 10f,
+            DamageSourcePosition = transform.position,
         };
 
         damagable.TakeDamage(damageInfo);

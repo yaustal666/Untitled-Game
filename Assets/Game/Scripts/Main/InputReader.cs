@@ -2,13 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class InputReader : MonoBehaviour
 {
-    public event Action PausePressed;
-    public event Action InventoryPressed;
-    public event Action QuestPressed;
-    public event Action MaskPressed;
-    public event Action UnPausePressed;
+    public event Action<WindowType> WindowOpenPressed;
+    public event Action CloseWindowPressed;
 
     public event Action InteractPressed;
 
@@ -62,14 +60,16 @@ public class InputReader : MonoBehaviour
         _attackAction.performed += (InputAction.CallbackContext context) => AttackPressed?.Invoke();
         _jumpAction.performed += (InputAction.CallbackContext context) => JumpPressed?.Invoke();
         _jumpAction.canceled += (InputAction.CallbackContext context) => JumpCanceled?.Invoke();
-        _pauseAction.performed += (InputAction.CallbackContext context) => PausePressed?.Invoke();
-        _inventoryAction.performed += (InputAction.CallbackContext context) => InventoryPressed?.Invoke();
-        _questAction.performed += (InputAction.CallbackContext context) => QuestPressed?.Invoke();
-        _maskAction.performed += (InputAction.CallbackContext context) => MaskPressed?.Invoke();
+
+        _pauseAction.performed += (InputAction.CallbackContext context) => WindowOpenPressed?.Invoke(WindowType.Pause);
+        _inventoryAction.performed += (InputAction.CallbackContext context) => WindowOpenPressed?.Invoke(WindowType.Inventory);
+        _questAction.performed += (InputAction.CallbackContext context) => WindowOpenPressed?.Invoke(WindowType.Quest);
+        _maskAction.performed += (InputAction.CallbackContext context) => WindowOpenPressed?.Invoke(WindowType.MaskUpgrade);
+
         _interactAction.performed += (InputAction.CallbackContext context) => InteractPressed?.Invoke();
 
         _unPauseAction = _uiMap.FindAction("UnPause");
-        _unPauseAction.performed += (InputAction.CallbackContext context) => UnPausePressed?.Invoke();
+        _unPauseAction.performed += (InputAction.CallbackContext context) => CloseWindowPressed?.Invoke();
     }
 
     public void EnablePlayerActionMap(bool enabled)

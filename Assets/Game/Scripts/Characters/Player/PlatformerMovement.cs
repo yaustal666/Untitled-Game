@@ -10,7 +10,6 @@ public class PlatformerMovement : MonoBehaviour
 
     private Animator _anim;
     private Rigidbody2D _rb;
-
     private JumpAbility _jump;
 
     private void Awake()

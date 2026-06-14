@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Inventory : IDisposable, ISavable
 {
@@ -18,7 +17,8 @@ public class Inventory : IDisposable, ISavable
 
     private int OnGetItemCountRequested(GetItemCountQuery query)
     {
-        if(_mappingItemToAmount.TryGetValue(query.ItemId, out int amount)) {
+        if (_mappingItemToAmount.TryGetValue(query.ItemId, out int amount))
+        {
             return amount;
         }
 

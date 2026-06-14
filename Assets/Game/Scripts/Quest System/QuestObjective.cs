@@ -1,5 +1,5 @@
 public class QuestObjective
-{    
+{
     public QuestObjectiveType ObjectiveType { get; private set; }
     public bool IsCompleted => CurrentAmount >= RequiredAmount;
     public int RequiredAmount { get; private set; }

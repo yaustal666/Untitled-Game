@@ -7,6 +7,14 @@
         "item_apple": {
             "name": "Apple",
             "description": "Yummy!"
+        },
+        "item_blue_gem": {
+            "name": "Blue Gem",
+            "description": "Just a blue gem"
+        },
+        "item_super_gem": {
+            "name": "Super Gem",
+            "description": "Shiny!"
         }
     },
     "quests": {
@@ -14,7 +22,7 @@
             "title": "Basic Quest",
             "description": "Collect 2 sticks",
             "objectives" : [
-                "Collect 2 sticks"
+                "Collect sticks"
             ]
         }
     }

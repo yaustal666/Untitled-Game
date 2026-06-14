@@ -1,23 +1,24 @@
 using Cysharp.Threading.Tasks;
 using Reflex.Core;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Lifetime = Reflex.Enums.Lifetime;
 using Resolution = Reflex.Enums.Resolution;
 
 public class SessionInstaller
 {
-    public async UniTask<Container> InstallGameSession(Container rootContainer)
+    public async UniTask<Container> InstallGameSession(Container rootContainer, GameSettings settings)
     {
         var quests = await LoadQuests();
         var items = await LoadItems();
+        var uiRoot = Object.Instantiate(settings.UIRootPrefab).GetComponent<UIRoot>();
 
         var sessionContainer = rootContainer.Scope(builder =>
         {
-            var gameSettings = rootContainer.Resolve<GameSettings>();
-
             builder.RegisterValue(quests);
             builder.RegisterValue(items);
+            builder.RegisterValue(uiRoot);
 
             builder.RegisterType(typeof(PlayerSpawner), Lifetime.Singleton, Resolution.Eager);
             builder.RegisterType(typeof(ItemLibrary), Lifetime.Singleton, Resolution.Eager);
@@ -30,6 +31,7 @@ public class SessionInstaller
 
             builder.RegisterType(typeof(Player), Lifetime.Singleton, Resolution.Eager);
             builder.RegisterType(typeof(LootUnpacker), Lifetime.Singleton, Resolution.Eager);
+            builder.RegisterType(typeof(UIController), Lifetime.Singleton, Resolution.Eager);
         });
 
 
