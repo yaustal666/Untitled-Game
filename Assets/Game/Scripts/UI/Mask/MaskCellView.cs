@@ -11,14 +11,6 @@ public class MaskCellView : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     [SerializeField] private Image _cellImage;
     [SerializeField] private Image _highlightImage;
-    [SerializeField] private Image _conflictImage;
-
-    [SerializeField] private Color _emptyColor = Color.white;
-    [SerializeField] private Color _redColor = Color.red;
-    [SerializeField] private Color _greenColor = Color.green;
-    [SerializeField] private Color _purpleColor = new Color(0.5f, 0f, 0.5f);
-    [SerializeField] private Color _yellowColor = Color.yellow;
-
     public Vector2Int Index { get; private set; }
 
     public void Initialize(Vector2Int index)
@@ -31,39 +23,20 @@ public class MaskCellView : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData) => OnCellPointerExit?.Invoke(Index);
     public void OnPointerClick(PointerEventData eventData) => OnCellPointerClick?.Invoke(Index);
 
-    public void SetColor(MaskColor? color)
+    public void SetColor(Color color)
     {
-        if (color == null)
-        {
-            _cellImage.color = _emptyColor;
-        }
-        else
-        {
-            _cellImage.color = color.Value switch
-            {
-                MaskColor.Red => _redColor,
-                MaskColor.Green => _greenColor,
-                MaskColor.Purple => _purpleColor,
-                MaskColor.Yellow => _yellowColor,
-                _ => _emptyColor
-            };
-        }
+        _cellImage.color = color;
     }
 
-    public void SetHoverPreview()
+    public void Highlite(Color color)
     {
-
-    }
-
-    public void SetConflictState(bool hasConflict)
-    {
-        _conflictImage.gameObject.SetActive(hasConflict);
+        _highlightImage.color = color;
+        _highlightImage.enabled = true;
     }
 
     public void ResetVisual()
     {
-        _highlightImage.gameObject.SetActive(false);
-        _conflictImage.gameObject.SetActive(false);
+        _highlightImage.enabled = false;
     }
 
 }

@@ -10,7 +10,7 @@ public class PlayerMenu : UIWindow
     private void Awake()
     {
         _inventoryView.Close();
-        //_maskUpgradeWindow.Close();
+        _maskUpgradeWindow.Close();
         _questWindow.Close();
     }
 

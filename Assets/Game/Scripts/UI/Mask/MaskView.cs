@@ -1,27 +1,35 @@
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MaskView : UIWindow
 {
-    [Inject] private Mask _maskModel;
-
-    [SerializeField] private GridLayoutGroup _gridLayout;
-    [SerializeField] private MaskCellView _cellPrefab;
+    [Inject] private Player _player;
 
     [SerializeField] private List<MaskCellView> _cellViewList = new();
+    [SerializeField] private ColorChooseView _colorChooseView;
+
+    [SerializeField] private Color _permitColot = Color.green;
+    [SerializeField] private Color _conflictColor = Color.red;
+
+    [SerializeField] private Color _emptyColor = Color.white;
+    [SerializeField] private Color _redColor = Color.red;
+    [SerializeField] private Color _greenColor = Color.green;
+    [SerializeField] private Color _purpleColor = new Color(0.5f, 0f, 0.5f);
+    [SerializeField] private Color _yellowColor = Color.yellow;
+
     private MaskColor _currentSelectedColor;
 
     private List<Vector2Int> _activeConflicts = new List<Vector2Int>();
-    private Vector2Int _lastHoveredIndex;
 
     public int width;
     public int height;
+    private CancellationTokenSource _hoverCts;
 
     private void Start()
     {
-
         for (int i = 0; i < height; i++)
         {
             for (int j = 0; j < width; j++)
@@ -36,35 +44,41 @@ public class MaskView : UIWindow
             }
         }
 
-        RefreshAllCells();
+        _colorChooseView.ColorChosen += SetCurrentColor;
     }
 
-    public void SetCurrentColor(int colorIndex)
+    public void SetCurrentColor(MaskColor color)
     {
-        _currentSelectedColor = (MaskColor)colorIndex;
-
-        if (_lastHoveredIndex != null)
-        {
-            HandleCellPointerEnter(_lastHoveredIndex);
-        }
+        Debug.Log("Color Chosen - " + color.ToString());
+        _currentSelectedColor = color;
     }
 
     private void HandleCellPointerEnter(Vector2Int index)
     {
-        _lastHoveredIndex = index;
+        _hoverCts?.Cancel();
+        _hoverCts?.Dispose();
+        _hoverCts = new CancellationTokenSource();
+        OnHover(index, _hoverCts.Token).Forget();
+    }
+
+    private async UniTask OnHover(Vector2Int index, CancellationToken token)
+    {
+        bool isCancelled = await UniTask.Delay(500, ignoreTimeScale: true, cancellationToken: token).SuppressCancellationThrow();
+        if (isCancelled) return;
+
         ClearActiveConflicts();
 
-        MaskCellValidationResult result = _maskModel.EvaluatePlacement(index, _currentSelectedColor);
+        MaskCellValidationResult result = _player.Mask.EvaluatePlacement(index, _currentSelectedColor);
 
         if (result.IsSuccess)
         {
-            _cellViewList[index.x * height + index.y].SetHoverPreview();
+            _cellViewList[index.x * height + index.y].Highlite(_permitColot);
         }
         else
         {
             foreach (Vector2Int conflictPos in result.Conflicts)
             {
-                _cellViewList[conflictPos.x * height + conflictPos.y].SetConflictState(true);
+                _cellViewList[conflictPos.x * height + conflictPos.y].Highlite(_conflictColor);
                 _activeConflicts.Add(conflictPos);
             }
         }
@@ -72,17 +86,21 @@ public class MaskView : UIWindow
 
     private void HandleCellPointerExit(Vector2Int index)
     {
+        _hoverCts?.Cancel();
+        _hoverCts?.Dispose();
+        _hoverCts = null;
         _cellViewList[index.x * height + index.y].ResetVisual();
         ClearActiveConflicts();
     }
 
     private void HandleCellPointerClick(Vector2Int index)
     {
-        bool successfullyPainted = _maskModel.PaintCell(index, _currentSelectedColor);
+        bool successfullyPainted = _player.Mask.PaintCell(index, _currentSelectedColor);
 
         if (successfullyPainted)
         {
             ClearActiveConflicts();
+            _cellViewList[index.x * height + index.y].SetColor(MaskColorToColor(_currentSelectedColor));
         }
         else
         {
@@ -99,32 +117,10 @@ public class MaskView : UIWindow
         _activeConflicts.Clear();
     }
 
-    // Полное обновление всей сетки (например, после загрузки игры)
-    public void RefreshAllCells()
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                // Для этого вызовем хелпер, который мы допишем ниже
-                UpdateCellFromModel(new Vector2Int(x, y));
-            }
-        }
-    }
-
-    private void UpdateCellFromModel(Vector2Int index)
-    {
-        // Для работы этого метода добавь в свой класс Mask маленькое свойство-геттер:
-        // public int[,] Grid => _grid; 
-        // Или метод: public int GetCellRaw(Vector2Int idx) => _grid[idx.x, idx.y];
-
-        // Пример реализации:
-        // int val = _maskModel.GetCellRaw(index);
-        // _cellViews[index.x, index.y].SetColor(val > 0 ? (MaskColor?)(val - 1) : null);
-    }
-
     private void OnDestroy()
     {
+        _hoverCts?.Cancel();
+        _hoverCts?.Dispose();
         foreach (var cell in _cellViewList)
         {
             if (cell == null) continue;
@@ -134,4 +130,21 @@ public class MaskView : UIWindow
         }
     }
 
+    public Color MaskColorToColor(MaskColor maskColor)
+    {
+        return maskColor switch
+        {
+            MaskColor.Green => _greenColor,
+            MaskColor.Red => _redColor,
+            MaskColor.Yellow => _yellowColor,
+            MaskColor.Purple => _purpleColor,
+            _ => throw new KeyNotFoundException()
+        };
+    }
+
+    [ContextMenu("debugPrint")]
+    public void PrintDebug()
+    {
+        _player.Mask.PrintDebug();
+    }
 }

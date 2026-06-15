@@ -46,6 +46,7 @@ public class Game
         await _sessionContainer.Resolve<DialogueSystem>().Initialize();
         var uiRoot = _sessionContainer.Resolve<UIRoot>();
         GameObjectInjector.InjectRecursive(uiRoot.gameObject, _sessionContainer);
+        uiRoot.Initialize();
         _uiRoot = uiRoot;
     }
 

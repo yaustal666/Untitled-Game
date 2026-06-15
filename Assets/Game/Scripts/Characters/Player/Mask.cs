@@ -26,17 +26,19 @@ public class Mask : ISavable
 {
     private int[,] _grid;
     private Dictionary<MaskColor, int> _colorCounts;
+    public Action<StatModifier> StatChanged;
 
-    public Action<MaskColor, int> OnColorCountChanged;
-
-    public Mask(int width, int height)
+    public Mask(ISaveRegistry saveRegistry)
     {
-        _grid = new int[width, height];
+        _grid = new int[20, 20];
         _colorCounts = new Dictionary<MaskColor, int>
         {
-            { MaskColor.Red, 0 }, { MaskColor.Green, 0 },
-            { MaskColor.Purple, 0 }, { MaskColor.Yellow, 0 }
+            { MaskColor.Red, 0 },
+            { MaskColor.Green, 0 },
+            { MaskColor.Purple, 0 },
+            { MaskColor.Yellow, 0 }
         };
+        saveRegistry.Register(this);
     }
 
     public void Save(GameSaveData saveData)
@@ -76,14 +78,47 @@ public class Mask : ISavable
 
     public bool PaintCell(Vector2Int index, MaskColor color)
     {
-        MaskCellValidationResult result = EvaluatePlacement(index, color);
-        if (!result.IsSuccess) return false;
+        MaskCellValidationResult report = EvaluatePlacement(index, color);
+        if (!report.IsSuccess) return false;
 
         _grid.SetCell(index, (int)color + 1);
         _colorCounts[color]++;
 
-        OnColorCountChanged?.Invoke(color, _colorCounts[color]);
+        StatChanged?.Invoke(new StatModifier
+        {
+            ModifierType = StatModificationType.Flat,
+            StatType = ColorToStat(color),
+            Source = "Mask_" + color.ToString(),
+            Value = _colorCounts[color]
+        });
         return true;
+    }
+
+    public MaskCellValidationResult EvaluatePlacement(Vector2Int index, MaskColor color)
+    {
+        MaskCellValidationResult report = new MaskCellValidationResult(false);
+        if (_colorCounts[MaskColor.Green] == 0 && color == MaskColor.Green)
+        {
+            report.IsSuccess = true;
+            return report;
+        }
+
+        if (_grid.GetCell(index) != 0)
+        {
+            report.IsSuccess = false;
+            return report;
+        }
+
+        _grid.SetCell(index, (int)color + 1);
+        _colorCounts[color]++;
+
+        report.Conflicts = ValidateEntireGrid();
+
+        _grid.SetCell(index, 0);
+        _colorCounts[color]--;
+
+        report.IsSuccess = report.Conflicts.Count == 0;
+        return report;
     }
 
     public bool ClearCell(Vector2Int index)
@@ -107,24 +142,14 @@ public class Mask : ISavable
             return false;
         }
 
-        OnColorCountChanged?.Invoke(oldColor, _colorCounts[oldColor]);
+        StatChanged?.Invoke(new StatModifier
+        {
+            ModifierType = StatModificationType.Flat,
+            StatType = ColorToStat(oldColor),
+            Source = "Mask_" + oldColor.ToString(),
+            Value = _colorCounts[oldColor]
+        });
         return true;
-    }
-
-    public MaskCellValidationResult EvaluatePlacement(Vector2Int index, MaskColor color)
-    {
-        MaskCellValidationResult report = new MaskCellValidationResult(false);
-
-        _grid.SetCell(index, (int)color + 1);
-        _colorCounts[color]++;
-
-        report.Conflicts = ValidateEntireGrid();
-
-        _grid.SetCell(index, 0);
-        _colorCounts[color]--;
-
-        report.IsSuccess = report.Conflicts.Count == 0;
-        return report;
     }
 
     private List<Vector2Int> ValidateEntireGrid()
@@ -167,8 +192,12 @@ public class Mask : ISavable
                 break;
 
             case MaskColor.Green:
-                if (_colorCounts[MaskColor.Green] > 0 && CountNeighborsOfColor(index, MaskColor.Green) == 0)
-                    return false;
+                if (_colorCounts[MaskColor.Green] == 0)
+                    return true;
+                if (CountNeighborsOfColor(index, MaskColor.Green) == 0)
+                    {
+                    Debug.Log("Neighbors not found");
+                    return false; }
                 break;
 
             case MaskColor.Purple:
@@ -227,7 +256,37 @@ public class Mask : ISavable
     {
         foreach (MaskColor color in Enum.GetValues(typeof(MaskColor)))
         {
-            OnColorCountChanged?.Invoke(color, _colorCounts[color]);
+            //StatChanged?.Invoke(new StatModifier
+            //{
+            //    ModifierType = StatModificationType.Flat,
+            //    StatType = ColorToStat(color),
+            //    Source = "Mask_" + color.ToString(),
+            //    Value = _colorCounts[color]
+            //});
         }
+    }
+
+    public StatType ColorToStat(MaskColor color)
+    {
+        return color switch
+        {
+            MaskColor.Green => StatType.MaxHealth,
+            MaskColor.Red => StatType.Strength,
+            MaskColor.Yellow => StatType.Crit,
+            MaskColor.Purple => StatType.CritChance,
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    public void PrintDebug()
+    {
+        string output = "";
+        foreach (var kvp in _colorCounts)
+        {
+            output += kvp.Key.ToString() + " " + kvp.Value.ToString() + "\n";
+        }
+        Debug.Log(output);
+
+        _grid.Print();
     }
 }

@@ -11,6 +11,8 @@ public class TopDownMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _anim;
 
+    private bool isMoving = true;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -23,16 +25,34 @@ public class TopDownMovement : MonoBehaviour
         _rb.gravityScale = 0;
     }
 
+    private void Start()
+    {
+        _player.ControlEnabled += EnableMovement;
+    }
+
+    private void OnDisable()
+    {
+        _player.ControlEnabled -= EnableMovement;
+    }
+
+    private void EnableMovement(bool enabled)
+    {
+        isMoving = enabled;
+    }
+
     private void FixedUpdate()
     {
-        Move();
-        if (_rb.linearVelocity.magnitude > 0.1f)
+        if (isMoving)
         {
-            _anim.SetBool("running", true);
-        }
-        else
-        {
-            _anim.SetBool("running", false);
+            Move();
+            if (_rb.linearVelocity.magnitude > 0.1f)
+            {
+                _anim.SetBool("running", true);
+            }
+            else
+            {
+                _anim.SetBool("running", false);
+            }
         }
     }
 

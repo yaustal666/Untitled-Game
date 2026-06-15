@@ -43,4 +43,19 @@ public static class GridExtensions
     {
         return index.x >= 0 && index.x < grid.GetLength(0) && index.y >= 0 && index.y < grid.GetLength(1);
     }
+
+    public static void Print(this int[,] grid)
+    {
+        string output = "";
+        for (int x = 0; x < grid.GetLength(0); x++)
+        {
+            for (int y = 0; y < grid.GetLength(1); y++)
+            {
+                output += grid[x, y] + "\t";
+            }
+            output += "\n";
+        }
+        Debug.Log(output);
+
+    }
 }

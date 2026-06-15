@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 4888b286e21826941bc341d4a1090c8a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5111562896304687686
+    second: darkhatman_idle_sheet_64x64_0
+  - first:
+      213: 3787997090077622846
+    second: darkhatman_idle_sheet_64x64_1
+  - first:
+      213: 3044004579973598340
+    second: darkhatman_idle_sheet_64x64_2
+  - first:
+      213: 1521269815261055106
+    second: darkhatman_idle_sheet_64x64_3
+  - first:
+      213: -7416701795889818368
+    second: darkhatman_idle_sheet_64x64_4
+  - first:
+      213: 5581314890746262587
+    second: darkhatman_idle_sheet_64x64_5
+  - first:
+      213: -2344054807449595459
+    second: darkhatman_idle_sheet_64x64_6
+  - first:
+      213: 5146154371826248344
+    second: darkhatman_idle_sheet_64x64_7
+  - first:
+      213: 279334857665968344
+    second: darkhatman_idle_sheet_64x64_8
+  - first:
+      213: 3285323378307278112
+    second: darkhatman_idle_sheet_64x64_9
+  - first:
+      213: -5400662377562838746
+    second: darkhatman_idle_sheet_64x64_10
+  - first:
+      213: 200101315486348699
+    second: darkhatman_idle_sheet_64x64_11
+  - first:
+      213: 362304533929916939
+    second: darkhatman_idle_sheet_64x64_12
+  - first:
+      213: 8193284383957474282
+    second: darkhatman_idle_sheet_64x64_13
+  - first:
+      213: 3212746689963250882
+    second: darkhatman_idle_sheet_64x64_14
+  - first:
+      213: -8760679570281483321
+    second: darkhatman_idle_sheet_64x64_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 207
+        width: 28
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64ace493f5befe640800000000000000
+      internalID: 5111562896304687686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 207
+        width: 28
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e324a44a84ba19430800000000000000
+      internalID: 3787997090077622846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 207
+        width: 28
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c0df3a90a7e3a20800000000000000
+      internalID: 3044004579973598340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 207
+        width: 28
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 288c82246d2ac1510800000000000000
+      internalID: 1521269815261055106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_4
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 143
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0055cf21305921990800000000000000
+      internalID: -7416701795889818368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 143
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3477827250d47d40800000000000000
+      internalID: 5581314890746262587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_6
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 143
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db19beb629e387fd0800000000000000
+      internalID: -2344054807449595459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_7
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 143
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89ae60cb220da6740800000000000000
+      internalID: 5146154371826248344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_8
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 79
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d87094b29560e300800000000000000
+      internalID: 279334857665968344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_9
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 79
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 025aa48c430d79d20800000000000000
+      internalID: 3285323378307278112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_10
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 79
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 629ec897e2efc05b0800000000000000
+      internalID: -5400662377562838746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_11
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 79
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b95f6a41617e6c200800000000000000
+      internalID: 200101315486348699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_12
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 15
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0af765dd0a270500800000000000000
+      internalID: 362304533929916939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_13
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 15
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeb5a81ccb464b170800000000000000
+      internalID: 8193284383957474282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_14
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 15
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c45298b718f59c20800000000000000
+      internalID: 3212746689963250882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: darkhatman_idle_sheet_64x64_15
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 15
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3b95ec850db6680800000000000000
+      internalID: -8760679570281483321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d8e6d6ee0c27a054c92ed5543761997b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      darkhatman_idle_sheet_64x64_0: 5111562896304687686
+      darkhatman_idle_sheet_64x64_1: 3787997090077622846
+      darkhatman_idle_sheet_64x64_10: -5400662377562838746
+      darkhatman_idle_sheet_64x64_11: 200101315486348699
+      darkhatman_idle_sheet_64x64_12: 362304533929916939
+      darkhatman_idle_sheet_64x64_13: 8193284383957474282
+      darkhatman_idle_sheet_64x64_14: 3212746689963250882
+      darkhatman_idle_sheet_64x64_15: -8760679570281483321
+      darkhatman_idle_sheet_64x64_2: 3044004579973598340
+      darkhatman_idle_sheet_64x64_3: 1521269815261055106
+      darkhatman_idle_sheet_64x64_4: -7416701795889818368
+      darkhatman_idle_sheet_64x64_5: 5581314890746262587
+      darkhatman_idle_sheet_64x64_6: -2344054807449595459
+      darkhatman_idle_sheet_64x64_7: 5146154371826248344
+      darkhatman_idle_sheet_64x64_8: 279334857665968344
+      darkhatman_idle_sheet_64x64_9: 3285323378307278112
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

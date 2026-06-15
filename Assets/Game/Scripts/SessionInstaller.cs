@@ -28,10 +28,11 @@ public class SessionInstaller
 
             builder.RegisterType(typeof(QuestSystem), Lifetime.Singleton, Resolution.Eager);
             builder.RegisterType(typeof(DialogueSystem), Lifetime.Singleton, Resolution.Eager);
-
+            
             builder.RegisterType(typeof(Player), Lifetime.Singleton, Resolution.Eager);
             builder.RegisterType(typeof(LootUnpacker), Lifetime.Singleton, Resolution.Eager);
             builder.RegisterType(typeof(UIController), Lifetime.Singleton, Resolution.Eager);
+            builder.RegisterType(typeof(StatsCalculator), Lifetime.Singleton, Resolution.Eager);
         });
 
 

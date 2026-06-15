@@ -15,10 +15,19 @@ public class DialogueWindow : UIWindow
 
     private List<Button> _activeButtons = new List<Button>();
 
-    private void Awake()
+    public override void Initialize()
     {
         _dialogueSystem.OnTextReceived += ShowText;
         _dialogueSystem.OnChoicesReceived += ShowChoices;
+    }
+
+    private void OnDisable()
+    {
+        if(_dialogueSystem != null )
+        {
+            _dialogueSystem.OnTextReceived -= ShowText;
+            _dialogueSystem.OnChoicesReceived -= ShowChoices;
+        }
     }
 
     private void Update()

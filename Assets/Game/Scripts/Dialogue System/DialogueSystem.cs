@@ -3,7 +3,6 @@ using Ink.Runtime;
 using Reflex.Attributes;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DialogueSystem : ISavable, IDisposable
 {
@@ -52,7 +51,6 @@ public class DialogueSystem : ISavable, IDisposable
 
     public void StartDialogue(string knotName)
     {
-        Debug.Log("START DIALOGUE");
         if (_isDialogueActive) return;
         _isDialogueActive = true;
 

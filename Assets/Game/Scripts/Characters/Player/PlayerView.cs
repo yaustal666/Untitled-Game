@@ -10,6 +10,7 @@ public class PlayerView : MonoBehaviour, IDamagable
     [SerializeField] private Transform _attackPoint;
 
     private SpriteRenderer _sr;
+    private Rigidbody2D _rb;
     private Animator _anim;
     private Hurtbox _hurtbox;
 
@@ -19,6 +20,7 @@ public class PlayerView : MonoBehaviour, IDamagable
     private void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _hurtbox = GetComponentInChildren<Hurtbox>();
         _hurtbox.Owner = this;
@@ -71,6 +73,7 @@ public class PlayerView : MonoBehaviour, IDamagable
     public void TakeDamage(DamageData damageInfo)
     {
         _player.TakeDamage(damageInfo);
+        ApplyKnockback(damageInfo);
     }
 
     private async UniTask DamageFlash()
@@ -78,6 +81,23 @@ public class PlayerView : MonoBehaviour, IDamagable
         _mat.SetFloat("_FlashPower", 1f);
         await UniTask.WaitForSeconds(damageFlashTime);
         _mat.SetFloat("_FlashPower", 0f);
+    }
+
+    private void ApplyKnockback(DamageData damageInfo)
+    {
+        Vector2 myPosition = transform.position;
+        Vector2 knockbackDirection = (myPosition - damageInfo.DamageSourcePosition).normalized;
+
+        _player.EnableControl(false);
+        _rb.linearVelocity = knockbackDirection * 10;
+        DelayedEnableNavigation().Forget();
+    }
+
+    private async UniTask DelayedEnableNavigation()
+    {
+        await UniTask.Delay(200);
+        _rb.linearVelocity = Vector2.zero;
+        _player.EnableControl(true);
     }
 
     private void OnDisable()

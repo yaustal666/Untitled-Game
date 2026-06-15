@@ -11,4 +11,9 @@ public abstract class UIWindow : MonoBehaviour
     { 
         gameObject.SetActive(false);
     }
+
+    public virtual void Initialize()
+    {
+
+    }
 }

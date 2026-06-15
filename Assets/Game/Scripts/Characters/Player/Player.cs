@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public enum PlayerMode
 {
@@ -18,11 +17,13 @@ public class Player : IDisposable
 {
     public event Action PlayerDead;
     public event Action PlayerGotHit;
+    public event Action<bool> ControlEnabled; 
     public event Action<PlayerMode> PlayerChangedMode;
 
     public Health Health { get; private set; }
     public PlayerStats Stats { get; private set; }
     public Inventory Inventory { get; private set; }
+    public Mask Mask { get; private set; }
     public PlayerMode CurrentMode { get; private set; }
     public PlayerStatus CurrentStatus { get; private set; }
 
@@ -31,6 +32,7 @@ public class Player : IDisposable
         Stats = new PlayerStats();
         Health = new Health(Stats);
         Inventory = new Inventory(saveRegistry, eventBus);
+        Mask = new Mask(saveRegistry);
         Health.Dead += Die;
         CurrentMode = PlayerMode.TopDown;
     }
@@ -46,6 +48,17 @@ public class Player : IDisposable
     {
         CurrentMode = mode;
         PlayerChangedMode?.Invoke(mode);
+    }
+
+    public void EnableControl(bool enable)
+    {
+        if (enable)
+        {
+            ControlEnabled?.Invoke(true);
+        } else
+        {
+            ControlEnabled?.Invoke(false);
+        }
     }
 
     private void Die()

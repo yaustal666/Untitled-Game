@@ -71,7 +71,8 @@ public class Projectile : MonoBehaviour
             {
                 DamageData damageInfo = new DamageData
                 {
-                    Damage = Data.BaseDamage
+                    Damage = Data.BaseDamage,
+                    DamageSourcePosition = transform.position,
                 };
                 hurtbox.Owner.TakeDamage(damageInfo);
             }

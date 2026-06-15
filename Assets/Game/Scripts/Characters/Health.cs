@@ -1,22 +1,33 @@
 using System;
 
-public class Health
+public class Health : IDisposable
 {
     public event Action Dead;
+    private CharacterStat _maxHealth;
 
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
 
     public Health(PlayerStats stats)
     {
-        MaxHealth = stats.GetStatValue(StatType.MaxHealth);
+        MaxHealth = stats.GetBaseValue(StatType.MaxHealth);
         CurrentHealth = MaxHealth;
+        _maxHealth = stats.GetStat(StatType.MaxHealth);
+        _maxHealth.StatChanged += MaxHealthUpgrade;
     }
 
     public Health (float maxHealth)
     {
         MaxHealth = maxHealth;
         CurrentHealth = MaxHealth;
+    }
+
+    public void Dispose()
+    {
+        if (_maxHealth != null)
+        {
+            _maxHealth.StatChanged -= MaxHealthUpgrade;
+        }
     }
 
     public float HealthPercentage => CurrentHealth / MaxHealth;
@@ -39,11 +50,9 @@ public class Health
         CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
     }
 
-    public void MaxHealthUpgrade(float percentage)
+    public void MaxHealthUpgrade(float value)
     {
-        MaxHealth *= (1 + percentage);
-        CurrentHealth *= (1 - percentage);
-
+        MaxHealth = value;
         CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
     }
 }

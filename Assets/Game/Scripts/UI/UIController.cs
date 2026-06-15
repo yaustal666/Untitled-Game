@@ -17,7 +17,7 @@ public class UIController : IDisposable
 
         _input.WindowOpenPressed += OpenWindow;
         _input.CloseWindowPressed += CloseWindow;
-        _dialogueSystem.ExitDialogue += CloseWindow;
+        _dialogueSystem.ExitDialogue += CloseDialogue;
         _dialogueSystem.EnterDialogue += OpenWindow;
         _ui.WindowClosed += Unpause;
         _ui.MainMenuPressed += ExitToMainMenu;
@@ -91,6 +91,7 @@ public class UIController : IDisposable
 
     private void CloseDialogue()
     {
+        Debug.Log("EndDial");
         if (_ui.ActiveWindow is DialogueWindow)
         {
             _ui.CloseWindow();

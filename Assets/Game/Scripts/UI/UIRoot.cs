@@ -29,6 +29,14 @@ public class UIRoot : MonoBehaviour
         }
     }
 
+    public void Initialize()
+    {
+        foreach(var window in _windows)
+        {
+            window.Initialize();
+        }
+    }
+
     public void OpenWindow<T>(Action<T> setup = null) where T : UIWindow
     {
         UIWindow window;

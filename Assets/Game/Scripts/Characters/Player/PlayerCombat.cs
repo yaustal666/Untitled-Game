@@ -23,6 +23,7 @@ public class PlayerCombat : MonoBehaviour
     private bool canAttack = true;
 
     public bool IsAttacking => isAttacking;
+    private bool isAttackBlocked = false;
 
     private void Awake()
     {
@@ -39,11 +40,23 @@ public class PlayerCombat : MonoBehaviour
         }
 
         _inputReader.AttackPressed += OnAttackPressed;
+        _player.ControlEnabled += OnControlEnabled;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.AttackPressed -= OnAttackPressed;
+        _player.ControlEnabled -= OnControlEnabled;
+    }
+
+    private void OnControlEnabled(bool enabled)
+    {
+        isAttackBlocked = !enabled;
     }
 
     private void OnAttackPressed()
     {
-        if (canAttack)
+        if (canAttack && !isAttackBlocked)
         {
             PerformAttack();
         }
@@ -100,10 +113,5 @@ public class PlayerCombat : MonoBehaviour
         canAttack = true;
         canCombo = true;
         comboInputTimer = Time.time + comboWindowTime;
-    }
-
-    private void OnDisable()
-    {
-        _inputReader.AttackPressed -= OnAttackPressed;
     }
 }
