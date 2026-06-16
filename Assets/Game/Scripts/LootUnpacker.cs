@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class LootUnpacker : IDisposable
 {
@@ -11,6 +12,7 @@ public class LootUnpacker : IDisposable
         _gameEvents = eventBus;
 
         _gameEvents.Subscribe<EnemyDeathMessage>(UnpackEnemyLoot);
+        _gameEvents.Subscribe<QuestCompleted>(UnpackQuestReward);
     }
 
     private void UnpackEnemyLoot(EnemyDeathMessage message)
@@ -23,6 +25,14 @@ public class LootUnpacker : IDisposable
             {
                 _player.Inventory.AddItem(loot.itemID, loot.Amount);
             }
+        }
+    }
+
+    private void UnpackQuestReward(QuestCompleted quest)
+    {
+        foreach (var reward in quest.rewards)
+        {
+            _player.Inventory.AddItem(reward.ItemId, reward.ItemAmount);
         }
     }
 

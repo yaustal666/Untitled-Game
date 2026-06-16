@@ -5,12 +5,18 @@ using UnityEngine;
 public class PrefabCollection : ScriptableObject
 {
     [SerializeField] private List<GameObject> prefabs = new List<GameObject>();
+    [SerializeField] private GameObject startRoom;
     [SerializeField] private string path;
 
     public GameObject GetRandom()
     {
         var roomIdx = Random.Range(0, prefabs.Count);
         return prefabs[roomIdx];
+    }
+
+    public GameObject GetStartRoom()
+    {
+        return startRoom;
     }
 
     public GameObject Get(int idx)

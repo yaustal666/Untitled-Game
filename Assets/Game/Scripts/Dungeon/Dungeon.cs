@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -9,9 +10,11 @@ public class Dungeon : MonoBehaviour
     public bool Ready { get; private set; } = false;
 
     [Inject] private Player _player;
+    [Inject] private GameEvents _events;
     public Transform PlayerTransform;
 
     public CinemachineConfiner2D _confiner;
+    public GameObject blackScreen;
 
     [SerializeField] private PrefabCollection _roomsLibrary;
     private DungeonGenerator gen;
@@ -64,7 +67,16 @@ public class Dungeon : MonoBehaviour
                 {
                     var neighbours = GetNeighborsList(index);
 
-                    var newRoom = Instantiate(_roomsLibrary.GetRandom()).GetComponent<DungeonRoom>();
+                    DungeonRoom newRoom;
+
+                    if(index == startRoomIndex)
+                    {
+                        newRoom = Instantiate(_roomsLibrary.GetStartRoom()).GetComponent<DungeonRoom>();
+                    } else
+                    {
+                        newRoom = Instantiate(_roomsLibrary.GetRandom()).GetComponent<DungeonRoom>();
+
+                    }
 
                     newRoom.transform.Translate(roomHorizontalDistance * (j - 3), -roomVerticalDistance * i, 0);
                     newRoom.InitializeDoors(neighbours);
@@ -100,6 +112,7 @@ public class Dungeon : MonoBehaviour
 
     private void OnPlayerExitRoom(DoorDirection doorDirection)
     {
+        ShowBlackScreen(500).Forget();
         var currentRoom = _mappingGridToRoom[currentRoomIndex];
         var nextRoom = _mappingGridToRoom[currentRoomIndex + DirectionToVec(doorDirection)];
 
@@ -108,6 +121,17 @@ public class Dungeon : MonoBehaviour
         _confiner.BoundingShape2D = nextRoom.CameraBoundary;
         currentRoomIndex = currentRoomIndex + DirectionToVec(doorDirection);
         nextRoom.Enter();
+    }
+
+    public async UniTask ShowBlackScreen(int ms)
+    {
+        blackScreen.SetActive(true);
+        _events.Publish<HideHUDMessage>(new HideHUDMessage
+        {
+            milliseconds = ms,
+        });
+        await UniTask.Delay(ms, ignoreTimeScale: true);
+        blackScreen.SetActive(false);
     }
 
     public Vector2Int DirectionToVec(DoorDirection direction) => direction switch

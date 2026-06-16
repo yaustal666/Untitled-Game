@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 8065137805966845571}
   - {fileID: 7582120719711280175}
   - {fileID: 265215995932498713}
+  - {fileID: 1997454159425639215}
 --- !u!1 &7938632743990463403
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +392,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2524042488181429280, guid: 4d56a6a209f31c74e9b42b68105db1e2, type: 3}
   m_PrefabInstance: {fileID: 3041914534124277774}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1997454159425639215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3571192736442893089, guid: 4d56a6a209f31c74e9b42b68105db1e2, type: 3}
+  m_PrefabInstance: {fileID: 3041914534124277774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707394fc9f5c68b4ea81d857b2a5c09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUD
 --- !u!114 &2187436871513069944 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3777494347515398518, guid: 4d56a6a209f31c74e9b42b68105db1e2, type: 3}

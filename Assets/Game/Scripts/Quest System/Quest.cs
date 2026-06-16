@@ -19,12 +19,14 @@ public class Quest
     public List<QuestObjective> Objectives => _objectives;
 
     private List<QuestObjective> _objectives;
+    public List<QuestRewardData> rewards;
 
     public Quest(QuestData data)
     {
         Id = data.Id;
         Status = QuestStatus.NotStarted;
         _objectives = data.ObjectivesData.Select(d => new QuestObjective(d)).ToList();
+        rewards = data.RewardsData;
     }
 
     public void Activate()

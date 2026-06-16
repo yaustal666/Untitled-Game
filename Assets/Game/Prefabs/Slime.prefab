@@ -225,15 +225,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slime
   _lootTable: {fileID: 11400000, guid: 56453be9aa09f2846b1f56787417270f, type: 2}
+  knockbackForce: 8
+  knockbackDelay: 300
   _spitAttack:
     projectilePrefab: {fileID: 6545511704491719598, guid: 5b0a85c70b7af3a42bfaae411e72a73b, type: 3}
     firePoint: {fileID: 7837017953404326233}
     projectileData: {fileID: 11400000, guid: 583f4134deca1da4382fbd830597d296, type: 2}
     shotsInQueue: 1
     delayBetweenShots: 0
+    isTracking: 0
     defaultPoolCapacity: 3
     maxPoolSize: 8
-    isTracking: 0
   _detector: {fileID: 4805042664521492461}
 --- !u!212 &7653934942776634775
 SpriteRenderer:

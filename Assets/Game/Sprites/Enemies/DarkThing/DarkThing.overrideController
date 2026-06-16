@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DarkThing
+  m_Controller: {fileID: 9100000, guid: 72df426f4b849b943b406fab3439e5fe, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 47bec86bfeab8784d96d5c69843a2f25, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 97da3998b4dbc2449b20a121eb9da829, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 58beb74d96ab57d439b47c1ee73977c9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 633a0470da13cc6499770d1bde5b918f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d517be7aa5d240041898958bdcc13669, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ce9d30f7d7b874246af30699104ee760, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2e7c5440a9b149a448638a4b892856b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8b136456d7e56e3469935db71a96bc04, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b6e4bf515621d3a48a3ff0cadaa6968e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e9a1a24cad9202748810700bfb00a9d9, type: 2}

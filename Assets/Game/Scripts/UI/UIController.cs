@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
@@ -7,13 +8,15 @@ public class UIController : IDisposable
     private readonly InputReader _input;
     private readonly DialogueSystem _dialogueSystem;
     private readonly UIRoot _ui;
+    private GameEvents _events;
 
-    public UIController(Game game, InputReader inputReader, DialogueSystem dialogueSystem, UIRoot uiRoot)
+    public UIController(Game game, InputReader inputReader, DialogueSystem dialogueSystem, UIRoot uiRoot, GameEvents events)
     {
         _game = game;
         _input = inputReader;
         _dialogueSystem = dialogueSystem;
         _ui = uiRoot;
+        _events = events;
 
         _input.WindowOpenPressed += OpenWindow;
         _input.CloseWindowPressed += CloseWindow;
@@ -21,6 +24,21 @@ public class UIController : IDisposable
         _dialogueSystem.EnterDialogue += OpenWindow;
         _ui.WindowClosed += Unpause;
         _ui.MainMenuPressed += ExitToMainMenu;
+
+        _events.Subscribe<HideHUDMessage>(HideHUD);
+    }
+
+    private void HideHUD(HideHUDMessage message)
+    {
+        HUD hud = (HUD) _ui.GetWindow<HUD>();
+        HideAndShowHUD(hud, message.milliseconds).Forget();
+    }
+
+    public async UniTask HideAndShowHUD(HUD hud, int ms)
+    {
+        hud.gameObject.SetActive(false);
+        await UniTask.Delay(ms, ignoreTimeScale: true);
+        hud.gameObject.SetActive(true);
     }
 
     public void Dispose()

@@ -36,6 +36,10 @@ public class QuestSystem : IDisposable, ISavable
     private void OnQuestCompleted(string questId)
     {
         var quest = GetQuest(questId);
+        _eventBus.Publish<QuestCompleted>(new QuestCompleted
+        {
+            rewards = quest.rewards,
+        });
     }
 
     public void ActivateQuest(string questId)

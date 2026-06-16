@@ -89,6 +89,16 @@ public struct EnemyDeathMessage : IGameMessage
     public LootTable LootTable;
 }
 
+public struct HideHUDMessage : IGameMessage
+{
+    public int milliseconds;
+}
+
+public struct QuestCompleted : IGameMessage
+{
+    public List<QuestRewardData> rewards;
+}
+
 public struct GetItemCountQuery : IGameQuery<int>
 {
     public string ItemId;

@@ -63,7 +63,7 @@ public class MaskView : UIWindow
 
     private async UniTask OnHover(Vector2Int index, CancellationToken token)
     {
-        bool isCancelled = await UniTask.Delay(500, ignoreTimeScale: true, cancellationToken: token).SuppressCancellationThrow();
+        bool isCancelled = await UniTask.Delay(300, ignoreTimeScale: true, cancellationToken: token).SuppressCancellationThrow();
         if (isCancelled) return;
 
         ClearActiveConflicts();

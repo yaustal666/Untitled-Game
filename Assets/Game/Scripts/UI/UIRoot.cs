@@ -11,7 +11,7 @@ public class UIRoot : MonoBehaviour
     public UIWindow ActiveWindow => _windowStack.Peek();
 
     [SerializeField] private List<UIWindow> _windows = new();
-    private Dictionary<Type, UIWindow> _mappingTypeToWindows = new();
+    private Dictionary<Type, UIWindow> _mappingTypeToWindow = new();
     private Stack<UIWindow> _windowStack = new();
 
     private void Awake()
@@ -24,7 +24,7 @@ public class UIRoot : MonoBehaviour
         foreach (var window in _windows)
         {
             var windowType = window.GetType();
-            _mappingTypeToWindows.Add(windowType, window);
+            _mappingTypeToWindow.Add(windowType, window);
             window.Close();
         }
     }
@@ -40,7 +40,7 @@ public class UIRoot : MonoBehaviour
     public void OpenWindow<T>(Action<T> setup = null) where T : UIWindow
     {
         UIWindow window;
-        if (!_mappingTypeToWindows.TryGetValue(typeof(T), out window))
+        if (!_mappingTypeToWindow.TryGetValue(typeof(T), out window))
         {
             Debug.LogError("Requested non existent window Type");
             return;
@@ -53,6 +53,11 @@ public class UIRoot : MonoBehaviour
 
         window.Open();
         _windowStack.Push(window);
+    }
+
+    public UIWindow GetWindow<T>()
+    {
+        return _mappingTypeToWindow[typeof(T)];
     }
 
     public void CloseWindow()

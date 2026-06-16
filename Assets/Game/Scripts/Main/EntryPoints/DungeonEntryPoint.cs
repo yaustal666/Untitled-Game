@@ -19,6 +19,8 @@ public sealed class DungeonEntryPoint : EntryPoint
 
         var sceneContainer = gameObject.scene.GetSceneContainer();
 
+        dungeon.ShowBlackScreen(1000).Forget();
+
         var playerObject = _playerSpawner.SpawnPlayer(dungeon.GetStartRoomPosition());
         GameObjectInjector.InjectRecursive(playerObject, sceneContainer);
 
