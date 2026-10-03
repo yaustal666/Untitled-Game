@@ -1,0 +1,6 @@
+![Demo Video](pictures/Start.gif)
+![Demo Video](pictures/Perspectives.gif)
+![Demo Video](pictures/2dFight.gif)
+![Demo Video](pictures/TDFight.gif)
+![Demo Video](pictures/Dialogue.gif)
+![Demo Video](pictures/Inventory.gif)
